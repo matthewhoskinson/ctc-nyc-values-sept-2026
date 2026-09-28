@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CTC NYC - Team Values & Alignment Assessment</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <style>
+        .cat-creative { background-color: #d1fae5; border-color: #10b981; color: #065f46; }
+        .cat-results { background-color: #dbeafe; border-color: #3b82f6; color: #1e40af; }
+        .cat-strategic { background-color: #f3e8ff; border-color: #a855f7; color: #6b21a8; }
+        .cat-collaborative { background-color: #fef3c7; border-color: #f59e0b; color: #92400e; }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen pb-12">
+    <!-- Config Placeholder -->
+    <script>
+ const firebaseConfig = {
+  apiKey: "AIzaSyAc_RvEzrj6jsKgmNQlF7n1cbvyZ3ENPmM",
+  authDomain: "ctc-nyc-values-sept-2026.firebaseapp.com",
+  projectId: "ctc-nyc-values-sept-2026",
+  storageBucket: "ctc-nyc-values-sept-2026.firebasestorage.app",
+  messagingSenderId: "1059839729307",
+  appId: "1:1059839729307:web:43c07cea2f536a0e8ff03e"
+};
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+    </script>
+
+    <header class="bg-slate-800 border-b border-slate-700 py-6 px-4 mb-8">
+        <div class="max-w-5xl mx-mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+            <div>
+                <h1 class="text-2xl font-bold text-white">CTC NYC Team Values Assessment</h1>
+                <p class="text-slate-400 text-sm">A resource from Northstar Strategies LLC</p>
+            </div>
+            <div id="step-indicators" class="flex gap-2">
+                <span id="ind-1" class="px-3 py-1 bg-indigo-600 text-white rounded-full text-xs font-bold">1 Rank</span>
+                <span id="ind-2" class="px-3 py-1 bg-slate-700 text-slate-400 rounded-full text-xs font-bold">2 Alignment</span>
+                <span id="ind-3" class="px-3 py-1 bg-slate-700 text-slate-400 rounded-full text-xs font-bold">3 Overuse</span>
+                <span id="ind-4" class="px-3 py-1 bg-slate-700 text-slate-400 rounded-full text-xs font-bold">4 Counter-Balance</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-5xl mx-auto px-4">
+        <!-- STEP 1: RANKING -->
+        <section id="step-1" class="space-y-6">
+            <div class="bg-slate-800 p-6 rounded-xl border border-slate-700">
+                <h2 class="text-xl font-bold mb-2 text-indigo-400">Step 1: Select Your Team & Rank Values</h2>
+                <p class="text-slate-300 text-sm mb-4">Select your sub-team below, then drag and drop the 20 values into order of priority (1 = Most Important to how your team functions, 20 = Least Important).</p>
+                
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-slate-300 mb-2">Select Your Sub-Team:</label>
+                    <select id="sub-team-select" class="w-full md:w-64 bg-slate-900 border border-slate-600 rounded-lg p-2.5 text-white focus:ring-2 focus:ring-indigo-500">
+                        <option value="">-- Choose Team --</option>
+                        <option value="Programs">Programs</option>
+                        <option value="Marketing">Marketing</option>
+                        <option value="Operations">Operations</option>
+                        <option value="Fundraising">Fundraising</option>
+                        <option value="Catalysts">Catalysts</option>
+                    </select>
+                </div>
+
+                <ul id="values-list" class="space-y-2"></ul>
+
+                <button id="submit-step1" onclick="submitStep1()" class="w-full mt-6 py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-lg shadow-lg transition">Submit & Await Facilitator</button>
+            </div>
+        </section>
+
+        <!-- STEP 2: ALIGNMENT & PERCEPTION GAPS -->
+        <section id="step-2" class="hidden space-y-6">
+            <div class="bg-slate-800 p-6 rounded-xl border border-slate-700">
+                <h2 class="text-xl font-bold mb-2 text-indigo-400">Step 2: Individual vs. Team vs. Organization Alignment</h2>
+                <p class="text-slate-300 text-sm mb-6">Compare your personal priorities against your sub-team average and the entire CTC NYC organizational average. Items highlighted in red indicate major perception gaps (5+ rank divergence).</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="alignment-columns"></div>
+
+                <button onclick="goToStep(3)" class="w-full mt-6 py-3 bg-slate-700 hover:bg-slate-600 text-white font-bold rounded-lg transition">Please wait before proceeding to Step 3</button>
+            </div>
+        </section>
+
+        <!-- STEP 3: OVERUSE DANGERS -->
+        <section id="step-3" class="hidden space-y-6">
+            <div class="bg-slate-800 p-6 rounded-xl border border-slate-700">
+                <h2 class="text-xl font-bold mb-2 text-indigo-400">Step 3: Overuse Risk Comparison</h2>
+                <p class="text-slate-300 text-sm mb-6">Examine where your team’s collective dominant values risk triggering overuse behavior, contrasted with your personal tendencies.</p>
+                
+                <div id="overuse-matrix" class="space-y-4"></div>
+
+                <button onclick="goToStep(4)" class="w-full mt-6 py-3 bg-slate-700 hover:bg-slate-600 text-white font-bold rounded-lg transition">Please wait before proceeding to Step 4</button>
+            </div>
+        </section>
+
+        <!-- STEP 4: COUNTER-BALANCING BLUEPRINT -->
+        <section id="step-4" class="hidden space-y-6">
+            <div class="bg-slate-800 p-6 rounded-xl border border-slate-700">
+                <h2 class="text-xl font-bold mb-2 text-indigo-400">Step 4: Comparative Counter-Balancing Blueprint</h2>
+                <p class="text-slate-300 text-sm mb-6">Leaning into competing values protects your team and organization from friction and burnout.</p>
+                
+                <div id="counter-matrix" class="space-y-4"></div>
+
+                <div class="mt-8 p-6 bg-slate-900 rounded-lg border border-slate-700">
+                    <h3 class="text-lg font-bold text-indigo-300 mb-4">Team Leadership Action Plan</h3>
+                    <textarea class="w-full bg-slate-800 border border-slate-600 rounded-lg p-3 text-slate-200 h-28 mb-4" placeholder="1. What surprised you most about the gap between your assessment and CTC NYC averages?"></textarea>
+                    <textarea class="w-full bg-slate-800 border border-slate-600 rounded-lg p-3 text-slate-200 h-28" placeholder="2. What specific counter-balancing value will your team lean into this month?"></textarea>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const valuesData = [
+            { id: 1, name: "Growth focus", cat: "cat-creative", overuse: "Waste", counter: "Cost Control" },
+            { id: 2, name: "Self Organization", cat: "cat-creative", overuse: "Confusion", counter: "Organizational Predictability" },
+            { id: 3, name: "Creative Action", cat: "cat-creative", overuse: "Chaos", counter: "Procedural Compliance" },
+            { id: 4, name: "Intrinsic Motivation", cat: "cat-creative", overuse: "Blind Intensity", counter: "Managerial Control" },
+            { id: 5, name: "Positive Contagion (Woo)", cat: "cat-creative", overuse: "Delusion", counter: "Objective Analysis" },
+            { id: 6, name: "Full Engagement", cat: "cat-results", overuse: "Exhaustion", counter: "Life Balance" },
+            { id: 7, name: "Individual Accountability", cat: "cat-results", overuse: "Conflict", counter: "Cohesive Teamwork" },
+            { id: 8, name: "Decisive Action", cat: "cat-results", overuse: "Exclusion", counter: "Group Deliberation" },
+            { id: 9, name: "Achievement Focus", cat: "cat-results", overuse: "Self-Interest", counter: "Authentic Relationships" },
+            { id: 10, name: "Constructive Confrontation", cat: "cat-results", overuse: "Abrasiveness", counter: "Appreciative Expression" },
+            { id: 11, name: "Cost Control", cat: "cat-strategic", overuse: "Austerity", counter: "Growth Focus" },
+            { id: 12, name: "Organizational Predictability", cat: "cat-strategic", overuse: "Rigidity", counter: "Self Organization" },
+            { id: 13, name: "Procedural Compliance", cat: "cat-strategic", overuse: "Bureaucracy", counter: "Creative Action" },
+            { id: 14, name: "Managerial Control", cat: "cat-strategic", overuse: "Micro-Management", counter: "Intrinsic Motivation" },
+            { id: 15, name: "Objective Analysis", cat: "cat-strategic", overuse: "Cynicism", counter: "Positive Contagion (Woo)" },
+            { id: 16, name: "Life Balance", cat: "cat-collaborative", overuse: "Withdrawal", counter: "Full Engagement" },
+            { id: 17, name: "Cohesive Teamwork", cat: "cat-collaborative", overuse: "Groupthink", counter: "Individual Accountability" },
+            { id: 18, name: "Group Deliberation", cat: "cat-collaborative", overuse: "Indecisiveness", counter: "Decisive Action" },
+            { id: 19, name: "Authentic Relationships", cat: "cat-collaborative", overuse: "Permissiveness", counter: "Achievement Focus" },
+            { id: 20, name: "Appreciative Expression", cat: "cat-collaborative", overuse: "Conflict Avoidance", counter: "Constructive Confrontation" }
+        ];
+
+        let myRanking = [];
+        let myTeamName = "";
+        let userId = "user_" + Math.random().toString(36).substr(2, 9);
+
+        // Initialize Step 1 List
+        const listEl = document.getElementById('values-list');
+        valuesData.sort(() => Math.random() - 0.5).forEach((item, index) => {
+            const li = document.createElement('li');
+            li.dataset.id = item.id;
+            li.className = "bg-slate-700 p-3 rounded-lg flex items-center justify-between cursor-move shadow-sm border border-slate-600";
+            li.innerHTML = `<span class="font-medium text-slate-200">${item.name}</span> <span class="text-xs text-slate-400">⋮⋮</span>`;
+            listEl.appendChild(li);
+        });
+
+        new Sortable(listEl, { animation: 150 });
+
+        function submitStep1() {
+            myTeamName = document.getElementById('sub-team-select').value;
+            if (!myTeamName) { alert("Please select your sub-team before submitting."); return; }
+
+            const items = listEl.querySelectorAll('li');
+            myRanking = Array.from(items).map((li, index) => ({
+                id: parseInt(li.dataset.id),
+                rank: index + 1,
+                score: 21 - (index + 1) // Reverse weighted score
+            }));
+
+            // Save to Firebase
+            db.ref('submissions/' + userId).set({
+                team: myTeamName,
+                rankings: myRanking,
+                timestamp: Date.now()
+            });
+
+            goToStep(2);
+            listenForAverages();
+        }
+
+        function goToStep(step) {
+            document.querySelectorAll('main > section').forEach(s => s.classList.add('hidden'));
+            document.getElementById(`step-${step}`).classList.remove('hidden');
+            
+            // Update Top Bar Indicators
+            const labels = ["1 Rank", "2 Alignment", "3 Overuse", "4 Counter-Balance"];
+            for (let i = 1; i <= 4; i++) {
+                const ind = document.getElementById(`ind-${i}`);
+                if (i <= step) {
+                    ind.className = "px-3 py-1 bg-indigo-600 text-white rounded-full text-xs font-bold";
+                    ind.innerText = labels[i-1];
+                } else {
+                    ind.className = "px-3 py-1 bg-slate-700 text-slate-400 rounded-full text-xs font-bold";
+                    ind.innerText = i.toString();
+                }
+            }
+        }
+
+        function listenForAverages() {
+            db.ref('submissions').on('value', snapshot => {
+                const data = snapshot.val() || {};
+                const submissions = Object.values(data);
+                
+                // Calculate Averages
+                const teamSubs = submissions.filter(s => s.team === myTeamName);
+                const teamAvgs = calculateRankings(teamSubs);
+                const ctcAvgs = calculateRankings(submissions);
+
+                renderStep2(teamAvgs, ctcAvgs);
+                renderStep3(teamAvgs);
+                renderStep4(teamAvgs);
+            });
+        }
+
+        function calculateRankings(subList) {
+            if (!subList.length) return {};
+            let totals = {};
+            valuesData.forEach(v => totals[v.id] = 0);
+            
+            subList.forEach(s => {
+                s.rankings.forEach(r => totals[r.id] += r.score);
+            });
+
+            let sorted = Object.keys(totals).map(id => ({
+                id: parseInt(id),
+                avgScore: (totals[id] / subList.length).toFixed(1)
+            })).sort((a, b) => b.avgScore - a.avgScore);
+
+            sorted.forEach((item, index) => item.rank = index + 1);
+            return sorted;
+        }
+
+        function renderStep2(teamAvgs, ctcAvgs) {
+            const container = document.getElementById('alignment-columns');
+            container.innerHTML = '';
+
+            const createCol = (title, items, isMy = false) => {
+                let html = `<div class="bg-slate-900 p-4 rounded-lg border border-slate-700"><h3 class="font-bold text-center text-indigo-300 mb-3">${title}</h3><div class="space-y-2">`;
+                items.forEach(item => {
+                    const val = valuesData.find(v => v.id === item.id);
+                    const myRankItem = myRanking.find(r => r.id === item.id);
+                    const gap = myRankItem ? Math.abs(myRankItem.rank - item.rank) : 0;
+                    const gapClass = (!isMy && gap >= 5) ? 'border-2 border-red-500 bg-red-950/30' : '';
+
+                    html += `<div class="p-2 rounded text-xs border border-slate-700 ${val.cat} ${gapClass}">
+                        <div class="font-bold">#${item.rank} ${val.name}</div>
+                        <div class="opacity-80">${item.avgScore ? `Avg Score: ${item.avgScore}` : ''} ${gap >= 5 && !isMy ? `<span class="text-red-400 font-bold ml-1">(Gap: ${gap})</span>` : ''}</div>
+                    </div>`;
+                });
+                return html + `</div></div>`;
+            };
+
+            const mySorted = [...myRanking].sort((a, b) => a.rank - b.rank);
+            container.innerHTML += createCol('My Personal Rank', mySorted, true);
+            container.innerHTML += createCol(`${myTeamName} Team Rank`, teamAvgs);
+            container.innerHTML += createCol('CTC NYC Org Rank', ctcAvgs);
+        }
+
+        function renderStep3(teamAvgs) {
+            const container = document.getElementById('overuse-matrix');
+            container.innerHTML = '<h3 class="font-bold text-indigo-300 mb-2">Team Top 7 Overuse Exposure</h3>';
+            
+            teamAvgs.slice(0, 7).forEach(item => {
+                const val = valuesData.find(v => v.id === item.id);
+                container.innerHTML += `
+                    <div class="p-4 bg-slate-900 rounded-lg border border-slate-700 flex justify-between items-center">
+                        <div>
+                            <span class="text-xs px-2 py-1 rounded font-bold ${val.cat}">${val.name}</span>
+                            <div class="text-sm text-slate-300 mt-1">Core Value Priority</div>
+                        </div>
+                        <div class="text-right">
+                            <span class="text-xs px-2 py-1 bg-red-900/50 text-red-300 rounded font-bold border border-red-700">${val.overuse}</span>
+                            <div class="text-sm text-slate-400 mt-1">Overuse / Shadow Risk</div>
+                        </div>
+                    </div>`;
+            });
+        }
+
+        function renderStep4(teamAvgs) {
+            const container = document.getElementById('counter-matrix');
+            container.innerHTML = '<h3 class="font-bold text-indigo-300 mb-2">Team Counter-Balancing Blueprint</h3>';
+            
+            teamAvgs.slice(0, 7).forEach(item => {
+                const val = valuesData.find(v => v.id === item.id);
+                container.innerHTML += `
+                    <div class="p-4 bg-slate-900 rounded-lg border border-slate-700 flex justify-between items-center">
+                        <div>
+                            <div class="text-xs text-slate-400">Team Tendency</div>
+                            <div class="font-bold text-slate-200">${val.name}</div>
+                        </div>
+                        <div class="text-indigo-400 font-bold">➔ Lean Into ➔</div>
+                        <div class="text-right">
+                            <div class="text-xs text-slate-400">Counter-Balance Value</div>
+                            <div class="font-bold text-emerald-400">${val.counter}</div>
+                        </div>
+                    </div>`;
+            });
+        }
+    </script>
+</body>
+</html>
