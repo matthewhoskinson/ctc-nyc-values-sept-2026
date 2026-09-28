@@ -59,8 +59,8 @@
             <div class="bg-white p-6 rounded-xl shadow-sm border border-amber-100">
                 <h2 class="text-2xl font-bold text-slate-900 mb-2">Team Values & Alignment Assessment</h2>
                 <p class="text-slate-600 text-sm mb-4">
-                    Select your primary team below, then drag and drop (or use the arrow buttons) to rank the 20 values from 
-                    <strong class="text-amber-800">#1 (Most Critical)</strong> to <strong class="text-amber-800">#20 (Least Critical)</strong>.
+                    Select your primary team below, then drag and drop (or use the arrow buttons) to rank the 20 values 
+                    <strong class="text-amber-800">from #1 (Most Important to CTC NYC) to #20 (Least Important to CTC NYC), from your perspective</strong>.
                 </p>
                 <div class="max-w-md">
                     <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">Select Your Team *</label>
@@ -240,7 +240,20 @@
             { id: 20, name: "Appreciative Expression", cat: "cat-collaborative", overuse: "Superficial praise that avoids dealing with critical performance issues.", balance: "Constructive Confrontation", orgScore: 8 }
         ];
 
-        let userRankings = [...valuesData];
+        // Shuffle utility (Fisher-Yates) to randomize initial list order
+        function shuffle(array) {
+            let currentIndex = array.length, randomIndex;
+            let arr = [...array];
+            while (currentIndex !== 0) {
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex--;
+                [arr[currentIndex], arr[randomIndex]] = [arr[randomIndex], arr[currentIndex]];
+            }
+            return arr;
+        }
+
+        // Initialize user rankings in a random order
+        let userRankings = shuffle(valuesData);
         let sortableInstance = null;
 
         document.addEventListener("DOMContentLoaded", () => {
