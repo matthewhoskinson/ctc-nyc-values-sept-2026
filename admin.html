@@ -5,16 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CTC NYC - Facilitator Live Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Firebase SDKs -->
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
     <style>
-        .cat-creative { background-color: #065f46; color: #a7f3d0; }
-        .cat-results { background-color: #1e40af; color: #bfdbfe; }
-        .cat-strategic { background-color: #6b21a8; color: #e9d5ff; }
-        .cat-collaborative { background-color: #92400e; color: #fef08a; }
+        body {
+            background-color: #fdfbf7; /* Warm light cream backdrop */
+            color: #1e293b;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        /* Updated standard category styles */
+        .cat-creative { background-color: #d1fae5; border-color: #10b981; color: #065f46; } /* Creative - Green */
+        .cat-results { background-color: #dbeafe; border-color: #3b82f6; color: #1e40af; } /* Results - Blue */
+        .cat-strategic { background-color: #fee2e2; border-color: #ef4444; color: #991b1b; } /* Strategic - Red */
+        .cat-collaborative { background-color: #fef3c7; border-color: #f59e0b; color: #92400e; } /* Collaborative - Yellow */
     </style>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen p-6">
+<body class="min-h-screen p-6">
     <script>
         const firebaseConfig = {
             apiKey: "AIzaSyAc_RvEzrj6jsKgmNQlF7n1cbvyZ3ENPmM",
@@ -29,74 +37,115 @@
         const db = firebase.database();
     </script>
 
-    <header class="flex justify-between items-center border-b border-slate-800 pb-4 mb-6">
+    <header class="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-stone-300 pb-4 mb-6 gap-4">
         <div>
-            <h1 class="text-3xl font-extrabold text-indigo-400">CTC NYC Live Facilitator Dashboard</h1>
-            <p class="text-slate-400 text-sm">Realtime Sub-Team & Organizational Value Aggregation</p>
+            <h1 class="text-3xl font-extrabold text-amber-800 tracking-tight">CTC NYC Live Facilitator Dashboard</h1>
+            <p class="text-stone-600 text-sm">Realtime Team & Organizational Value Aggregation</p>
         </div>
         <div class="flex items-center gap-4">
-            <div class="bg-slate-900 px-4 py-2 rounded-lg border border-slate-800">
-                <span class="text-slate-400 text-xs block">Live Submissions</span>
-                <span id="total-submissions" class="text-2xl font-bold text-emerald-400">0</span>
+            <div class="bg-white px-5 py-2.5 rounded-xl border border-stone-200 shadow-sm text-center">
+                <span class="text-stone-500 text-xs block font-bold uppercase tracking-wide">Live Submissions</span>
+                <span id="total-submissions" class="text-2xl font-black text-amber-600">0</span>
             </div>
-            <button onclick="clearData()" class="bg-red-900/40 border border-red-700 text-red-300 hover:bg-red-900 text-xs px-3 py-2 rounded">Clear Session</button>
+            <button onclick="clearData()" class="bg-red-50 border border-red-200 text-red-700 hover:bg-red-100 font-semibold text-xs px-4 py-2.5 rounded-xl shadow-sm transition">Clear Session</button>
         </div>
     </header>
 
     <main class="grid grid-cols-1 lg:grid-cols-4 gap-6">
-        <!-- Control Panel -->
-        <div class="bg-slate-900 p-4 rounded-xl border border-slate-800 space-y-4">
-            <h2 class="font-bold text-indigo-300">Filter Projection View</h2>
-            <select id="team-filter" onchange="updateView()" class="w-full bg-slate-800 border border-slate-700 p-2.5 rounded-lg text-white">
-                <option value="ALL">Entire Organization (CTC NYC)</option>
-                <option value="Programs">Programs</option>
-                <option value="Marketing">Marketing</option>
-                <option value="Operations">Operations</option>
-                <option value="Fundraising">Fundraising</option>
-                <option value="Catalysts">Catalysts</option>
-            </select>
+        <!-- Control Panel & Tab Navigation -->
+        <div class="bg-white p-5 rounded-2xl border border-stone-200 shadow-sm space-y-6">
+            <div>
+                <label class="block text-xs font-bold uppercase tracking-wider text-stone-500 mb-2">Filter View</label>
+                <select id="team-filter" onchange="updateView()" class="w-full bg-stone-50 border border-stone-300 p-3 rounded-xl text-stone-800 font-semibold focus:ring-2 focus:ring-amber-500 focus:outline-none">
+                    <option value="ALL">Entire Organization (CTC NYC)</option>
+                    <option value="Programs">Programs Team</option>
+                    <option value="Marketing">Marketing Team</option>
+                    <option value="Operations">Operations Team</option>
+                    <option value="Fundraising">Fundraising Team</option>
+                    <option value="Catalysts">Catalysts Team</option>
+                    <option value="NY">NY Team</option>
+                </select>
+            </div>
 
-            <div class="p-3 bg-slate-950 rounded-lg text-xs space-y-2 border border-slate-800">
-                <div class="font-bold text-slate-300">Legend:</div>
-                <div class="flex items-center gap-2"><span class="w-3 h-3 rounded bg-emerald-600"></span> Creative Change</div>
-                <div class="flex items-center gap-2"><span class="w-3 h-3 rounded bg-blue-600"></span> Robust Results</div>
-                <div class="flex items-center gap-2"><span class="w-3 h-3 rounded bg-purple-600"></span> Strategic Structures</div>
-                <div class="flex items-center gap-2"><span class="w-3 h-3 rounded bg-amber-600"></span> Collaborative Community</div>
+            <!-- Tab Switching Buttons -->
+            <div>
+                <label class="block text-xs font-bold uppercase tracking-wider text-stone-500 mb-2">Facilitator Projection Views</label>
+                <div class="space-y-2">
+                    <button id="tab-btn-1" onclick="switchTab(1)" class="w-full text-left p-3 rounded-xl font-bold text-xs bg-amber-600 text-white shadow-sm transition">1. Ranked Leaderboard (#1-20)</button>
+                    <button id="tab-btn-2" onclick="switchTab(2)" class="w-full text-left p-3 rounded-xl font-bold text-xs bg-stone-100 text-stone-700 hover:bg-stone-200 transition">2. Top 3 Overuse Risks</button>
+                    <button id="tab-btn-3" onclick="switchTab(3)" class="w-full text-left p-3 rounded-xl font-bold text-xs bg-stone-100 text-stone-700 hover:bg-stone-200 transition">3. Top 3 Counter-Balances</button>
+                </div>
+            </div>
+
+            <!-- Category Legend -->
+            <div class="p-3.5 bg-stone-50 rounded-xl text-xs space-y-2 border border-stone-200">
+                <div class="font-bold text-stone-700">Category Legend:</div>
+                <div class="flex items-center gap-2"><span class="w-3.5 h-3.5 rounded bg-emerald-500 border border-emerald-600"></span> Creative Change</div>
+                <div class="flex items-center gap-2"><span class="w-3.5 h-3.5 rounded bg-blue-500 border border-blue-600"></span> Robust Results</div>
+                <div class="flex items-center gap-2"><span class="w-3.5 h-3.5 rounded bg-red-500 border border-red-600"></span> Strategic Structures</div>
+                <div class="flex items-center gap-2"><span class="w-3.5 h-3.5 rounded bg-amber-500 border border-amber-600"></span> Collaborative Community</div>
             </div>
         </div>
 
-        <!-- Live Rankings Grid -->
-        <div class="lg:col-span-3 bg-slate-900 p-6 rounded-xl border border-slate-800">
-            <h2 id="view-title" class="text-xl font-bold text-slate-200 mb-4">Current Leaderboard: Entire Organization</h2>
-            <div id="rankings-grid" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
+        <!-- Main Projection Panel -->
+        <div class="lg:col-span-3 bg-white p-6 rounded-2xl border border-stone-200 shadow-sm">
+            <h2 id="view-title" class="text-xl font-extrabold text-stone-800 mb-6">Current Leaderboard: Entire Organization</h2>
+            
+            <!-- VIEW 1: Leaderboard (#1-10 Left, #11-20 Right) -->
+            <div id="tab-view-1" class="space-y-4">
+                <p class="text-xs text-stone-500 italic">Scores are averaged (Lower score = Higher priority rank across team members).</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h3 class="text-xs font-bold uppercase tracking-wider text-amber-700 mb-3">Top Priority (#1 - #10)</h3>
+                        <div id="col-left" class="space-y-2.5"></div>
+                    </div>
+                    <div>
+                        <h3 class="text-xs font-bold uppercase tracking-wider text-stone-500 mb-3">Lower Priority (#11 - #20)</h3>
+                        <div id="col-right" class="space-y-2.5"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIEW 2: Top 3 Overuse Dangers -->
+            <div id="tab-view-2" class="hidden space-y-4">
+                <p class="text-xs text-stone-500 italic">Aggregated Top 3 Dominant Values and their corresponding overuse hazards.</p>
+                <div id="overuse-container" class="space-y-3"></div>
+            </div>
+
+            <!-- VIEW 3: Top 3 Counter-Balancing Values -->
+            <div id="tab-view-3" class="hidden space-y-4">
+                <p class="text-xs text-stone-500 italic">Aggregated Top 3 Dominant Values paired with their balancing mechanisms.</p>
+                <div id="counter-container" class="space-y-3"></div>
+            </div>
         </div>
     </main>
 
     <script>
         const valuesData = [
-            { id: 1, name: "Growth focus", cat: "cat-creative" },
-            { id: 2, name: "Self Organization", cat: "cat-creative" },
-            { id: 3, name: "Creative Action", cat: "cat-creative" },
-            { id: 4, name: "Intrinsic Motivation", cat: "cat-creative" },
-            { id: 5, name: "Positive Contagion (Woo)", cat: "cat-creative" },
-            { id: 6, name: "Full Engagement", cat: "cat-results" },
-            { id: 7, name: "Individual Accountability", cat: "cat-results" },
-            { id: 8, name: "Decisive Action", cat: "cat-results" },
-            { id: 9, name: "Achievement Focus", cat: "cat-results" },
-            { id: 10, name: "Constructive Confrontation", cat: "cat-results" },
-            { id: 11, name: "Cost Control", cat: "cat-strategic" },
-            { id: 12, name: "Organizational Predictability", cat: "cat-strategic" },
-            { id: 13, name: "Procedural Compliance", cat: "cat-strategic" },
-            { id: 14, name: "Managerial Control", cat: "cat-strategic" },
-            { id: 15, name: "Objective Analysis", cat: "cat-strategic" },
-            { id: 16, name: "Life Balance", cat: "cat-collaborative" },
-            { id: 17, name: "Cohesive Teamwork", cat: "cat-collaborative" },
-            { id: 18, name: "Group Deliberation", cat: "cat-collaborative" },
-            { id: 19, name: "Authentic Relationships", cat: "cat-collaborative" },
-            { id: 20, name: "Appreciative Expression", cat: "cat-collaborative" }
+            { id: 1, name: "Growth focus", cat: "cat-creative", overuse: "Waste", counter: "Cost Control" },
+            { id: 2, name: "Self Organization", cat: "cat-creative", overuse: "Confusion", counter: "Organizational Predictability" },
+            { id: 3, name: "Creative Action", cat: "cat-creative", overuse: "Chaos", counter: "Procedural Compliance" },
+            { id: 4, name: "Intrinsic Motivation", cat: "cat-creative", overuse: "Blind Intensity", counter: "Managerial Control" },
+            { id: 5, name: "Positive Contagion (Woo)", cat: "cat-creative", overuse: "Delusion", counter: "Objective Analysis" },
+            { id: 6, name: "Full Engagement", cat: "cat-results", overuse: "Exhaustion", counter: "Life Balance" },
+            { id: 7, name: "Individual Accountability", cat: "cat-results", overuse: "Conflict", counter: "Cohesive Teamwork" },
+            { id: 8, name: "Decisive Action", cat: "cat-results", overuse: "Exclusion", counter: "Group Deliberation" },
+            { id: 9, name: "Achievement Focus", cat: "cat-results", overuse: "Self-Interest", counter: "Authentic Relationships" },
+            { id: 10, name: "Constructive Confrontation", cat: "cat-results", overuse: "Abrasiveness", counter: "Appreciative Expression" },
+            { id: 11, name: "Cost Control", cat: "cat-strategic", overuse: "Austerity", counter: "Growth Focus" },
+            { id: 12, name: "Organizational Predictability", cat: "cat-strategic", overuse: "Rigidity", counter: "Self Organization" },
+            { id: 13, name: "Procedural Compliance", cat: "cat-strategic", overuse: "Bureaucracy", counter: "Creative Action" },
+            { id: 14, name: "Managerial Control", cat: "cat-strategic", overuse: "Micro-Management", counter: "Intrinsic Motivation" },
+            { id: 15, name: "Objective Analysis", cat: "cat-strategic", overuse: "Cynicism", counter: "Positive Contagion (Woo)" },
+            { id: 16, name: "Life Balance", cat: "cat-collaborative", overuse: "Withdrawal", counter: "Full Engagement" },
+            { id: 17, name: "Cohesive Teamwork", cat: "cat-collaborative", overuse: "Groupthink", counter: "Individual Accountability" },
+            { id: 18, name: "Group Deliberation", cat: "cat-collaborative", overuse: "Indecisiveness", counter: "Decisive Action" },
+            { id: 19, name: "Authentic Relationships", cat: "cat-collaborative", overuse: "Permissiveness", counter: "Achievement Focus" },
+            { id: 20, name: "Appreciative Expression", cat: "cat-collaborative", overuse: "Conflict Avoidance", counter: "Constructive Confrontation" }
         ];
 
         let allSubmissions = [];
+        let currentTab = 1;
 
         db.ref('submissions').on('value', snapshot => {
             const data = snapshot.val() || {};
@@ -105,13 +154,34 @@
             updateView();
         });
 
+        function switchTab(tabNum) {
+            currentTab = tabNum;
+            for (let i = 1; i <= 3; i++) {
+                const btn = document.getElementById(`tab-btn-${i}`);
+                const view = document.getElementById(`tab-view-${i}`);
+                if (i === tabNum) {
+                    btn.className = "w-full text-left p-3 rounded-xl font-bold text-xs bg-amber-600 text-white shadow-sm transition";
+                    view.classList.remove('hidden');
+                } else {
+                    btn.className = "w-full text-left p-3 rounded-xl font-bold text-xs bg-stone-100 text-stone-700 hover:bg-stone-200 transition";
+                    view.classList.add('hidden');
+                }
+            }
+            updateView();
+        }
+
         function updateView() {
             const filter = document.getElementById('team-filter').value;
-            document.getElementById('view-title').innerText = filter === 'ALL' ? 'Current Leaderboard: Entire Organization' : `Current Leaderboard: ${filter} Team`;
+            const filterLabel = filter === 'ALL' ? 'Entire Organization' : `${filter} Team`;
+            document.getElementById('view-title').innerText = `Current View: ${filterLabel}`;
 
             const filtered = filter === 'ALL' ? allSubmissions : allSubmissions.filter(s => s.team === filter);
+
             if (!filtered.length) {
-                document.getElementById('rankings-grid').innerHTML = '<p class="text-slate-500 col-span-2">No submissions recorded for this selection yet.</p>';
+                document.getElementById('col-left').innerHTML = '<p class="text-stone-400 text-xs italic">No submissions yet.</p>';
+                document.getElementById('col-right').innerHTML = '<p class="text-stone-400 text-xs italic">No submissions yet.</p>';
+                document.getElementById('overuse-container').innerHTML = '<p class="text-stone-400 text-xs italic">No submissions yet.</p>';
+                document.getElementById('counter-container').innerHTML = '<p class="text-stone-400 text-xs italic">No submissions yet.</p>';
                 return;
             }
 
@@ -119,23 +189,73 @@
             valuesData.forEach(v => totals[v.id] = 0);
             filtered.forEach(s => s.rankings.forEach(r => totals[r.id] += r.score));
 
+            // INVERTED SCORING LOGIC: Ascending sort by score
             let sorted = Object.keys(totals).map(id => ({
                 id: parseInt(id),
                 avgScore: (totals[id] / filtered.length).toFixed(1)
-            })).sort((a, b) => b.avgScore - a.avgScore);
+            })).sort((a, b) => parseFloat(a.avgScore) - parseFloat(b.avgScore));
 
-            const grid = document.getElementById('rankings-grid');
-            grid.innerHTML = '';
+            // Render View 1: 2-Column Split Leaderboard (#1-10 Left, #11-20 Right)
+            const colLeft = document.getElementById('col-left');
+            const colRight = document.getElementById('col-right');
+            colLeft.innerHTML = '';
+            colRight.innerHTML = '';
 
             sorted.forEach((item, index) => {
                 const val = valuesData.find(v => v.id === item.id);
-                grid.innerHTML += `
-                    <div class="p-3 rounded-lg border border-slate-700 flex items-center justify-between ${val.cat}">
+                const cardHtml = `
+                    <div class="p-3 rounded-xl border flex items-center justify-between ${val.cat} shadow-sm">
                         <div class="flex items-center gap-3">
-                            <span class="font-bold text-lg">#${index + 1}</span>
-                            <span class="font-semibold">${val.name}</span>
+                            <span class="font-bold text-sm">#${index + 1}</span>
+                            <span class="font-semibold text-xs sm:text-sm">${val.name}</span>
                         </div>
-                        <span class="text-sm font-mono opacity-90">Score: ${item.avgScore}</span>
+                        <span class="text-xs font-mono font-bold opacity-90">Avg: ${item.avgScore}</span>
+                    </div>`;
+
+                if (index < 10) {
+                    colLeft.innerHTML += cardHtml;
+                } else {
+                    colRight.innerHTML += cardHtml;
+                }
+            });
+
+            // Render View 2: Top 3 Overuse Risks
+            const overuseContainer = document.getElementById('overuse-container');
+            overuseContainer.innerHTML = '';
+            sorted.slice(0, 3).forEach((item, index) => {
+                const val = valuesData.find(v => v.id === item.id);
+                overuseContainer.innerHTML += `
+                    <div class="p-4 bg-stone-50 rounded-xl border border-stone-200 flex justify-between items-center">
+                        <div class="flex items-center gap-3">
+                            <span class="w-8 h-8 rounded-full bg-amber-600 text-white font-bold flex items-center justify-center text-sm">#${index + 1}</span>
+                            <div>
+                                <span class="text-xs px-2.5 py-1 rounded-md font-bold border ${val.cat}">${val.name}</span>
+                                <div class="text-xs text-stone-500 mt-1">Score: ${item.avgScore}</div>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <span class="text-xs px-3 py-1 bg-red-100 text-red-800 rounded-md font-bold border border-red-300">Overuse: ${val.overuse}</span>
+                            <div class="text-xs text-stone-500 mt-1">Hazard Risk</div>
+                        </div>
+                    </div>`;
+            });
+
+            // Render View 3: Top 3 Counter-Balancing Blueprint
+            const counterContainer = document.getElementById('counter-container');
+            counterContainer.innerHTML = '';
+            sorted.slice(0, 3).forEach((item, index) => {
+                const val = valuesData.find(v => v.id === item.id);
+                counterContainer.innerHTML += `
+                    <div class="p-4 bg-stone-50 rounded-xl border border-stone-200 flex justify-between items-center">
+                        <div>
+                            <div class="text-xs text-stone-500">Org Priority #${index + 1}</div>
+                            <div class="font-bold text-stone-900 text-sm">${val.name}</div>
+                        </div>
+                        <div class="text-amber-700 font-bold text-xs uppercase tracking-wider">➔ Counter With ➔</div>
+                        <div class="text-right">
+                            <div class="text-xs text-stone-500">Lean Into</div>
+                            <div class="font-bold text-emerald-700 text-sm">${val.counter}</div>
+                        </div>
                     </div>`;
             });
         }
