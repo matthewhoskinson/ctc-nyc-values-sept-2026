@@ -4,115 +4,182 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CTC NYC - Team Values & Alignment Assessment</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Sortable JS for drag and drop -->
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
     <!-- Firebase SDKs -->
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
     <style>
-        .cat-creative { background-color: #d1fae5; border-color: #10b981; color: #065f46; }
-        .cat-results { background-color: #dbeafe; border-color: #3b82f6; color: #1e40af; }
-        .cat-strategic { background-color: #f3e8ff; border-color: #a855f7; color: #6b21a8; }
-        .cat-collaborative { background-color: #fef3c7; border-color: #f59e0b; color: #92400e; }
+        body {
+            background-color: #fdfbf7; /* Warm light cream backdrop */
+            color: #1e293b;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        /* Category Color Tokens */
+        .cat-creative { background-color: #d1fae5; border-color: #10b981; color: #065f46; } /* Creative Change - Green */
+        .cat-results { background-color: #dbeafe; border-color: #3b82f6; color: #1e40af; } /* Robust Results - Blue */
+        .cat-strategic { background-color: #fee2e2; border-color: #ef4444; color: #991b1b; } /* Strategic Structures - Red */
+        .cat-collaborative { background-color: #fef3c7; border-color: #f59e0b; color: #92400e; } /* Collaborative Community - Yellow */
+
+        /* High contrast major gap highlighting */
+        .gap-highlight {
+            border: 2.5px solid #8b5cf6 !important;
+            background-color: #f3e8ff !important;
+            color: #5b21b6 !important;
+        }
+
+        @media print {
+            header, button, select, #step-indicators { display: none !important; }
+            body { background: white !important; color: black !important; }
+            .bg-white, .bg-stone-50 { border: 1px solid #ccc !important; }
+            main > section { display: block !important; page-break-inside: avoid; }
+        }
     </style>
 </head>
-<body class="bg-slate-900 text-slate-100 min-h-screen pb-12">
-    <!-- Config Placeholder -->
+<body class="min-h-screen pb-12 text-slate-800">
+    <!-- Firebase Setup -->
     <script>
- const firebaseConfig = {
-  apiKey: "AIzaSyAc_RvEzrj6jsKgmNQlF7n1cbvyZ3ENPmM",
-  authDomain: "ctc-nyc-values-sept-2026.firebaseapp.com",
-  projectId: "ctc-nyc-values-sept-2026",
-  storageBucket: "ctc-nyc-values-sept-2026.firebasestorage.app",
-  messagingSenderId: "1059839729307",
-  appId: "1:1059839729307:web:43c07cea2f536a0e8ff03e"
-};
+        const firebaseConfig = {
+            apiKey: "AIzaSyAc_RvEzrj6jsKgmNQlF7n1cbvyZ3ENPmM",
+            authDomain: "ctc-nyc-values-sept-2026.firebaseapp.com",
+            databaseURL: "https://ctc-nyc-values-sept-2026-default-rtdb.firebaseio.com",
+            projectId: "ctc-nyc-values-sept-2026",
+            storageBucket: "ctc-nyc-values-sept-2026.firebasestorage.app",
+            messagingSenderId: "1059839729307",
+            appId: "1:1059839729307:web:43c07cea2f536a0e8ff03e"
+        };
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
     </script>
 
-    <header class="bg-slate-800 border-b border-slate-700 py-6 px-4 mb-8">
-        <div class="max-w-5xl mx-mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+    <header class="bg-stone-900 text-stone-100 py-6 px-4 mb-8 shadow-md">
+        <div class="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
             <div>
-                <h1 class="text-2xl font-bold text-white">CTC NYC Team Values Assessment</h1>
-                <p class="text-slate-400 text-sm">A resource from Northstar Strategies LLC</p>
+                <h1 class="text-2xl font-bold tracking-tight">CTC NYC Team Values Assessment</h1>
+                <p class="text-stone-400 text-sm">A resource from Northstar Strategies LLC</p>
             </div>
-            <div id="step-indicators" class="flex gap-2">
-                <span id="ind-1" class="px-3 py-1 bg-indigo-600 text-white rounded-full text-xs font-bold">1 Rank</span>
-                <span id="ind-2" class="px-3 py-1 bg-slate-700 text-slate-400 rounded-full text-xs font-bold">2 Alignment</span>
-                <span id="ind-3" class="px-3 py-1 bg-slate-700 text-slate-400 rounded-full text-xs font-bold">3 Overuse</span>
-                <span id="ind-4" class="px-3 py-1 bg-slate-700 text-slate-400 rounded-full text-xs font-bold">4 Counter-Balance</span>
+            <div id="step-indicators" class="flex flex-wrap gap-2">
+                <span id="ind-1" class="px-3 py-1 bg-amber-600 text-white rounded-full text-xs font-bold shadow-sm">1 Rank</span>
+                <span id="ind-2" class="px-3 py-1 bg-stone-800 text-stone-400 rounded-full text-xs font-bold">2 Alignment</span>
+                <span id="ind-3" class="px-3 py-1 bg-stone-800 text-stone-400 rounded-full text-xs font-bold">3 Overuse</span>
+                <span id="ind-4" class="px-3 py-1 bg-stone-800 text-stone-400 rounded-full text-xs font-bold">4 Counter-Balance</span>
             </div>
         </div>
     </header>
 
-    <main class="max-w-5xl mx-auto px-4">
+    <main class="max-w-5xl mx-auto px-4 space-y-8">
         <!-- STEP 1: RANKING -->
         <section id="step-1" class="space-y-6">
-            <div class="bg-slate-800 p-6 rounded-xl border border-slate-700">
-                <h2 class="text-xl font-bold mb-2 text-indigo-400">Step 1: Select Your Team & Rank Values</h2>
-                <p class="text-slate-300 text-sm mb-4">Select your sub-team below, then drag and drop the 20 values into order of priority (1 = Most Important to how your team functions, 20 = Least Important).</p>
+            <div class="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm">
+                <h2 class="text-xl font-bold mb-2 text-amber-700">Step 1: Select Your Team & Rank Values</h2>
+                <p class="text-stone-600 text-sm mb-6">Select your team below, then drag and drop the 20 values into order of priority (1 = Most Important to how your team functions, 20 = Least Important).</p>
                 
-                <div class="mb-6">
-                    <label class="block text-sm font-medium text-slate-300 mb-2">Select Your Sub-Team:</label>
-                    <select id="sub-team-select" class="w-full md:w-64 bg-slate-900 border border-slate-600 rounded-lg p-2.5 text-white focus:ring-2 focus:ring-indigo-500">
+                <div class="mb-6 max-w-md">
+                    <label class="block text-sm font-semibold text-stone-700 mb-2">Select Your Team:</label>
+                    <select id="team-select" class="w-full bg-stone-50 border border-stone-300 rounded-xl p-3 text-stone-800 focus:ring-2 focus:ring-amber-500 focus:outline-none shadow-sm font-medium">
                         <option value="">-- Choose Team --</option>
-                        <option value="Programs">Programs</option>
-                        <option value="Marketing">Marketing</option>
-                        <option value="Operations">Operations</option>
-                        <option value="Fundraising">Fundraising</option>
-                        <option value="Catalysts">Catalysts</option>
+                        <option value="Programs">Programs Team</option>
+                        <option value="Marketing">Marketing Team</option>
+                        <option value="Operations">Operations Team</option>
+                        <option value="Fundraising">Fundraising Team</option>
+                        <option value="Catalysts">Catalysts Team</option>
+                        <option value="NY">NY Team</option>
                     </select>
                 </div>
 
+                <!-- Values Drag-and-Drop Container -->
                 <ul id="values-list" class="space-y-2"></ul>
 
-                <button id="submit-step1" onclick="submitStep1()" class="w-full mt-6 py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-lg shadow-lg transition">Submit & Await Facilitator</button>
+                <button id="submit-step1" onclick="submitStep1()" class="w-full mt-6 py-3.5 bg-amber-600 hover:bg-amber-700 text-white font-bold rounded-xl shadow-md hover:shadow-lg transition">Submit & Proceed to Alignment</button>
             </div>
         </section>
 
         <!-- STEP 2: ALIGNMENT & PERCEPTION GAPS -->
         <section id="step-2" class="hidden space-y-6">
-            <div class="bg-slate-800 p-6 rounded-xl border border-slate-700">
-                <h2 class="text-xl font-bold mb-2 text-indigo-400">Step 2: Individual vs. Team vs. Organization Alignment</h2>
-                <p class="text-slate-300 text-sm mb-6">Compare your personal priorities against your sub-team average and the entire CTC NYC organizational average. Items highlighted in red indicate major perception gaps (5+ rank divergence).</p>
-                
+            <div class="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-4">
+                    <div>
+                        <h2 class="text-xl font-bold text-amber-700">Step 2: Individual vs. Team vs. Organization Alignment</h2>
+                        <p class="text-stone-600 text-sm">Compare personal priorities against team averages and the entire CTC NYC organizational average (Lower score = Higher priority). Purple borders indicate major rank gaps (5+ positions).</p>
+                    </div>
+                    <!-- Export Actions -->
+                    <div class="flex gap-2">
+                        <button onclick="window.print()" class="px-3.5 py-2 bg-stone-100 hover:bg-stone-200 text-stone-700 font-semibold text-xs rounded-lg border border-stone-300 flex items-center gap-1 transition">🖨️ Print / Save PDF</button>
+                        <button onclick="copySummaryText()" class="px-3.5 py-2 bg-stone-100 hover:bg-stone-200 text-stone-700 font-semibold text-xs rounded-lg border border-stone-300 flex items-center gap-1 transition">📋 Copy Text Summary</button>
+                    </div>
+                </div>
+
+                <!-- Callout Cards for Top 3 Perception Gaps -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div class="bg-purple-50 border-2 border-purple-200 p-4 rounded-xl">
+                        <h3 class="font-bold text-purple-900 text-sm mb-1">Key Perception Alignment Gaps (Individual vs. CTC NYC)</h3>
+                        <p class="text-xs text-purple-700 mb-3">Top 3 items where your personal ranking diverges most from the org average:</p>
+                        <ul id="gap-list-individual" class="space-y-1 text-xs font-semibold text-purple-950"></ul>
+                    </div>
+                    <div class="bg-indigo-50 border-2 border-indigo-200 p-4 rounded-xl">
+                        <h3 id="team-gap-title" class="font-bold text-indigo-900 text-sm mb-1">Key Team Perception Gaps (Team vs. CTC NYC)</h3>
+                        <p class="text-xs text-indigo-700 mb-3">Top 3 items where your team average diverges most from the org average:</p>
+                        <ul id="gap-list-team" class="space-y-1 text-xs font-semibold text-indigo-950"></ul>
+                    </div>
+                </div>
+
+                <!-- 3-Column Comparative Grid -->
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="alignment-columns"></div>
 
-                <button onclick="goToStep(3)" class="w-full mt-6 py-3 bg-slate-700 hover:bg-slate-600 text-white font-bold rounded-lg transition">Please wait before proceeding to Step 3</button>
+                <button onclick="goToStep(3)" class="w-full mt-6 py-3.5 bg-stone-800 hover:bg-stone-900 text-white font-bold rounded-xl shadow transition">Proceed to Step 3: Overuse Dangers</button>
             </div>
         </section>
 
         <!-- STEP 3: OVERUSE DANGERS -->
         <section id="step-3" class="hidden space-y-6">
-            <div class="bg-slate-800 p-6 rounded-xl border border-slate-700">
-                <h2 class="text-xl font-bold mb-2 text-indigo-400">Step 3: Overuse Risk Comparison</h2>
-                <p class="text-slate-300 text-sm mb-6">Examine where your team’s collective dominant values risk triggering overuse behavior, contrasted with your personal tendencies.</p>
-                
+            <div class="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm">
+                <h2 class="text-xl font-bold mb-2 text-amber-700">Step 3: Top 3 Overuse Risk Comparison</h2>
+                <p class="text-stone-600 text-sm mb-6">Examine where your team’s collective top 3 dominant values risk triggering overuse behavior, contrasted with your personal top tendencies.</p>
+
                 <div id="overuse-matrix" class="space-y-4"></div>
 
-                <button onclick="goToStep(4)" class="w-full mt-6 py-3 bg-slate-700 hover:bg-slate-600 text-white font-bold rounded-lg transition">Please wait before proceeding to Step 4</button>
+                <button onclick="goToStep(4)" class="w-full mt-6 py-3.5 bg-stone-800 hover:bg-stone-900 text-white font-bold rounded-xl shadow transition">Proceed to Step 4: Counter-Balancing Blueprint</button>
             </div>
         </section>
 
         <!-- STEP 4: COUNTER-BALANCING BLUEPRINT -->
         <section id="step-4" class="hidden space-y-6">
-            <div class="bg-slate-800 p-6 rounded-xl border border-slate-700">
-                <h2 class="text-xl font-bold mb-2 text-indigo-400">Step 4: Comparative Counter-Balancing Blueprint</h2>
-                <p class="text-slate-300 text-sm mb-6">Leaning into competing values protects your team and organization from friction and burnout.</p>
-                
+            <div class="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-4">
+                    <div>
+                        <h2 class="text-xl font-bold text-amber-700">Step 4: Top 3 Counter-Balancing Blueprint</h2>
+                        <p class="text-stone-600 text-sm">Leaning into competing values protects your team and organization from friction and burnout.</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="window.print()" class="px-3.5 py-2 bg-stone-100 hover:bg-stone-200 text-stone-700 font-semibold text-xs rounded-lg border border-stone-300 flex items-center gap-1 transition">🖨️ Print / Save PDF</button>
+                        <button onclick="copySummaryText()" class="px-3.5 py-2 bg-stone-100 hover:bg-stone-200 text-stone-700 font-semibold text-xs rounded-lg border border-stone-300 flex items-center gap-1 transition">📋 Copy Text Summary</button>
+                    </div>
+                </div>
+
                 <div id="counter-matrix" class="space-y-4"></div>
 
-                <div class="mt-8 p-6 bg-slate-900 rounded-lg border border-slate-700">
-                    <h3 class="text-lg font-bold text-indigo-300 mb-4">Team Leadership Action Plan</h3>
-                    <textarea class="w-full bg-slate-800 border border-slate-600 rounded-lg p-3 text-slate-200 h-28 mb-4" placeholder="1. What surprised you most about the gap between your assessment and CTC NYC averages?"></textarea>
-                    <textarea class="w-full bg-slate-800 border border-slate-600 rounded-lg p-3 text-slate-200 h-28" placeholder="2. What specific counter-balancing value will your team lean into this month?"></textarea>
+                <div class="mt-8 p-6 bg-stone-50 rounded-xl border border-stone-200">
+                    <h3 class="text-lg font-bold text-stone-800 mb-4">Team Leadership Action Plan</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-stone-600 mb-1">1. What surprised you most about the gap between your assessment and CTC NYC averages?</label>
+                            <textarea id="action-q1" class="w-full bg-white border border-stone-300 rounded-lg p-3 text-stone-800 h-24 focus:ring-2 focus:ring-amber-500 focus:outline-none" placeholder="Enter your observations..."></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-stone-600 mb-1">2. What specific counter-balancing value will your team lean into this month?</label>
+                            <textarea id="action-q2" class="w-full bg-white border border-stone-300 rounded-lg p-3 text-stone-800 h-24 focus:ring-2 focus:ring-amber-500 focus:outline-none" placeholder="Enter planned commitments..."></textarea>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
     </main>
 
     <script>
+        // Standard Values Dataset with categories, overuse risks, and counter-balancing values
         const valuesData = [
             { id: 1, name: "Growth focus", cat: "cat-creative", overuse: "Waste", counter: "Cost Control" },
             { id: 2, name: "Self Organization", cat: "cat-creative", overuse: "Confusion", counter: "Organizational Predictability" },
@@ -142,25 +209,29 @@
 
         // Initialize Step 1 List
         const listEl = document.getElementById('values-list');
-        valuesData.sort(() => Math.random() - 0.5).forEach((item, index) => {
+        [...valuesData].sort(() => Math.random() - 0.5).forEach((item) => {
             const li = document.createElement('li');
             li.dataset.id = item.id;
-            li.className = "bg-slate-700 p-3 rounded-lg flex items-center justify-between cursor-move shadow-sm border border-slate-600";
-            li.innerHTML = `<span class="font-medium text-slate-200">${item.name}</span> <span class="text-xs text-slate-400">⋮⋮</span>`;
+            li.className = "bg-white p-3.5 rounded-xl flex items-center justify-between cursor-move shadow-sm border border-stone-200 hover:border-amber-400 transition";
+            li.innerHTML = `<span class="font-medium text-stone-800">${item.name}</span> <span class="text-stone-400 font-mono">⋮⋮ Drag</span>`;
             listEl.appendChild(li);
         });
 
         new Sortable(listEl, { animation: 150 });
 
         function submitStep1() {
-            myTeamName = document.getElementById('sub-team-select').value;
-            if (!myTeamName) { alert("Please select your sub-team before submitting."); return; }
+            myTeamName = document.getElementById('team-select').value;
+            if (!myTeamName) { 
+                alert("Please select your team before submitting."); 
+                return; 
+            }
 
             const items = listEl.querySelectorAll('li');
+            // INVERTED SCORING LOGIC: Rank 1 = 1 point, Rank 20 = 20 points
             myRanking = Array.from(items).map((li, index) => ({
                 id: parseInt(li.dataset.id),
                 rank: index + 1,
-                score: 21 - (index + 1) // Reverse weighted score
+                score: index + 1
             }));
 
             // Save to Firebase
@@ -183,13 +254,14 @@
             for (let i = 1; i <= 4; i++) {
                 const ind = document.getElementById(`ind-${i}`);
                 if (i <= step) {
-                    ind.className = "px-3 py-1 bg-indigo-600 text-white rounded-full text-xs font-bold";
+                    ind.className = "px-3 py-1 bg-amber-600 text-white rounded-full text-xs font-bold shadow-sm";
                     ind.innerText = labels[i-1];
                 } else {
-                    ind.className = "px-3 py-1 bg-slate-700 text-slate-400 rounded-full text-xs font-bold";
+                    ind.className = "px-3 py-1 bg-stone-800 text-stone-400 rounded-full text-xs font-bold";
                     ind.innerText = i.toString();
                 }
             }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function listenForAverages() {
@@ -197,7 +269,6 @@
                 const data = snapshot.val() || {};
                 const submissions = Object.values(data);
                 
-                // Calculate Averages
                 const teamSubs = submissions.filter(s => s.team === myTeamName);
                 const teamAvgs = calculateRankings(teamSubs);
                 const ctcAvgs = calculateRankings(submissions);
@@ -209,7 +280,7 @@
         }
 
         function calculateRankings(subList) {
-            if (!subList.length) return {};
+            if (!subList.length) return [];
             let totals = {};
             valuesData.forEach(v => totals[v.id] = 0);
             
@@ -217,30 +288,82 @@
                 s.rankings.forEach(r => totals[r.id] += r.score);
             });
 
+            // Inverted logic: Sort ascending by average score (lower = higher priority)
             let sorted = Object.keys(totals).map(id => ({
                 id: parseInt(id),
                 avgScore: (totals[id] / subList.length).toFixed(1)
-            })).sort((a, b) => b.avgScore - a.avgScore);
+            })).sort((a, b) => parseFloat(a.avgScore) - parseFloat(b.avgScore));
 
             sorted.forEach((item, index) => item.rank = index + 1);
             return sorted;
         }
 
         function renderStep2(teamAvgs, ctcAvgs) {
+            document.getElementById('team-gap-title').innerText = `Key Team Perception Gaps (${myTeamName} Team vs. CTC NYC)`;
+
+            // Calculate Gaps (Individual vs Org)
+            let indivGaps = myRanking.map(myR => {
+                const orgItem = ctcAvgs.find(c => c.id === myR.id) || { rank: myR.rank };
+                return {
+                    id: myR.id,
+                    gap: Math.abs(myR.rank - orgItem.rank),
+                    myRank: myR.rank,
+                    orgRank: orgItem.rank
+                };
+            }).sort((a, b) => b.gap - a.gap);
+
+            // Populate Top 3 Individual Gaps Callout
+            const indivGapEl = document.getElementById('gap-list-individual');
+            indivGapEl.innerHTML = '';
+            indivGaps.slice(0, 3).forEach(g => {
+                const val = valuesData.find(v => v.id === g.id);
+                indivGapEl.innerHTML += `<li class="flex justify-between border-b border-purple-200/60 pb-1">
+                    <span>${val.name}</span>
+                    <span>Self: #${g.myRank} | Org: #${g.orgRank} (Gap: ${g.gap})</span>
+                </li>`;
+            });
+
+            // Calculate Gaps (Team vs Org)
+            let teamGaps = teamAvgs.map(tR => {
+                const orgItem = ctcAvgs.find(c => c.id === tR.id) || { rank: tR.rank };
+                return {
+                    id: tR.id,
+                    gap: Math.abs(tR.rank - orgItem.rank),
+                    teamRank: tR.rank,
+                    orgRank: orgItem.rank
+                };
+            }).sort((a, b) => b.gap - a.gap);
+
+            // Populate Top 3 Team Gaps Callout
+            const teamGapEl = document.getElementById('gap-list-team');
+            teamGapEl.innerHTML = '';
+            teamGaps.slice(0, 3).forEach(g => {
+                const val = valuesData.find(v => v.id === g.id);
+                teamGapEl.innerHTML += `<li class="flex justify-between border-b border-indigo-200/60 pb-1">
+                    <span>${val.name}</span>
+                    <span>Team: #${g.teamRank} | Org: #${g.orgRank} (Gap: ${g.gap})</span>
+                </li>`;
+            });
+
+            // Build 3 Columns
             const container = document.getElementById('alignment-columns');
             container.innerHTML = '';
 
             const createCol = (title, items, isMy = false) => {
-                let html = `<div class="bg-slate-900 p-4 rounded-lg border border-slate-700"><h3 class="font-bold text-center text-indigo-300 mb-3">${title}</h3><div class="space-y-2">`;
+                let html = `<div class="bg-stone-50 p-4 rounded-xl border border-stone-200"><h3 class="font-bold text-center text-stone-800 mb-3 text-sm">${title}</h3><div class="space-y-2">`;
                 items.forEach(item => {
                     const val = valuesData.find(v => v.id === item.id);
                     const myRankItem = myRanking.find(r => r.id === item.id);
                     const gap = myRankItem ? Math.abs(myRankItem.rank - item.rank) : 0;
-                    const gapClass = (!isMy && gap >= 5) ? 'border-2 border-red-500 bg-red-950/30' : '';
+                    const isMajorGap = (!isMy && gap >= 5);
+                    const gapClass = isMajorGap ? 'gap-highlight shadow-sm' : '';
 
-                    html += `<div class="p-2 rounded text-xs border border-slate-700 ${val.cat} ${gapClass}">
-                        <div class="font-bold">#${item.rank} ${val.name}</div>
-                        <div class="opacity-80">${item.avgScore ? `Avg Score: ${item.avgScore}` : ''} ${gap >= 5 && !isMy ? `<span class="text-red-400 font-bold ml-1">(Gap: ${gap})</span>` : ''}</div>
+                    html += `<div class="p-2.5 rounded-lg text-xs border transition ${val.cat} ${gapClass}">
+                        <div class="font-bold flex justify-between items-center">
+                            <span>#${item.rank} ${val.name}</span>
+                            ${isMajorGap ? `<span class="bg-purple-700 text-white px-1.5 py-0.5 rounded text-[10px] uppercase font-bold tracking-wide">Gap: ${gap}</span>` : ''}
+                        </div>
+                        <div class="opacity-80 mt-1 font-mono">${item.avgScore ? `Avg Score: ${item.avgScore}` : `Rank: ${item.rank}`}</div>
                     </div>`;
                 });
                 return html + `</div></div>`;
@@ -254,19 +377,23 @@
 
         function renderStep3(teamAvgs) {
             const container = document.getElementById('overuse-matrix');
-            container.innerHTML = '<h3 class="font-bold text-indigo-300 mb-2">Team Top 7 Overuse Exposure</h3>';
+            container.innerHTML = `<h3 class="font-bold text-stone-800 text-sm mb-3">${myTeamName} Team Top 3 Dominant Values & Overuse Exposure</h3>`;
             
-            teamAvgs.slice(0, 7).forEach(item => {
+            // Show Top 3 values
+            teamAvgs.slice(0, 3).forEach((item, index) => {
                 const val = valuesData.find(v => v.id === item.id);
                 container.innerHTML += `
-                    <div class="p-4 bg-slate-900 rounded-lg border border-slate-700 flex justify-between items-center">
-                        <div>
-                            <span class="text-xs px-2 py-1 rounded font-bold ${val.cat}">${val.name}</span>
-                            <div class="text-sm text-slate-300 mt-1">Core Value Priority</div>
+                    <div class="p-4 bg-stone-50 rounded-xl border border-stone-200 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                        <div class="flex items-center gap-3">
+                            <span class="w-7 h-7 rounded-full bg-amber-600 text-white font-bold flex items-center justify-center text-xs">#${index + 1}</span>
+                            <div>
+                                <span class="text-xs px-2.5 py-1 rounded-md font-bold border ${val.cat}">${val.name}</span>
+                                <div class="text-xs text-stone-500 mt-1">Core Priority Value</div>
+                            </div>
                         </div>
-                        <div class="text-right">
-                            <span class="text-xs px-2 py-1 bg-red-900/50 text-red-300 rounded font-bold border border-red-700">${val.overuse}</span>
-                            <div class="text-sm text-slate-400 mt-1">Overuse / Shadow Risk</div>
+                        <div class="text-left sm:text-right">
+                            <span class="text-xs px-3 py-1 bg-red-100 text-red-800 rounded-md font-bold border border-red-300">Overuse Risk: ${val.overuse}</span>
+                            <div class="text-xs text-stone-500 mt-1">Shadow Tendency</div>
                         </div>
                     </div>`;
             });
@@ -274,23 +401,50 @@
 
         function renderStep4(teamAvgs) {
             const container = document.getElementById('counter-matrix');
-            container.innerHTML = '<h3 class="font-bold text-indigo-300 mb-2">Team Counter-Balancing Blueprint</h3>';
+            container.innerHTML = `<h3 class="font-bold text-stone-800 text-sm mb-3">${myTeamName} Team Top 3 Counter-Balancing Blueprint</h3>`;
             
-            teamAvgs.slice(0, 7).forEach(item => {
+            // Show Top 3 values
+            teamAvgs.slice(0, 3).forEach((item, index) => {
                 const val = valuesData.find(v => v.id === item.id);
                 container.innerHTML += `
-                    <div class="p-4 bg-slate-900 rounded-lg border border-slate-700 flex justify-between items-center">
+                    <div class="p-4 bg-stone-50 rounded-xl border border-stone-200 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
                         <div>
-                            <div class="text-xs text-slate-400">Team Tendency</div>
-                            <div class="font-bold text-slate-200">${val.name}</div>
+                            <div class="text-xs text-stone-500">Team Dominant Priority #${index + 1}</div>
+                            <div class="font-bold text-stone-900">${val.name}</div>
                         </div>
-                        <div class="text-indigo-400 font-bold">➔ Lean Into ➔</div>
-                        <div class="text-right">
-                            <div class="text-xs text-slate-400">Counter-Balance Value</div>
-                            <div class="font-bold text-emerald-400">${val.counter}</div>
+                        <div class="text-amber-700 font-bold text-xs uppercase tracking-wider">➔ Lean Into ➔</div>
+                        <div class="text-left sm:text-right">
+                            <div class="text-xs text-stone-500">Counter-Balance Value</div>
+                            <div class="font-bold text-emerald-700">${val.counter}</div>
                         </div>
                     </div>`;
             });
+        }
+
+        function copySummaryText() {
+            const q1 = document.getElementById('action-q1')?.value || "N/A";
+            const q2 = document.getElementById('action-q2')?.value || "N/A";
+            
+            const text = `CTC NYC TEAM VALUES ASSESSMENT SUMMARY
+----------------------------------------
+Team: ${myTeamName}
+User ID: ${userId}
+
+Surprising Gap Observations:
+${q1}
+
+Commitment Counter-Balancing Value:
+${q2}
+----------------------------------------`;
+
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+
+            alert("Assessment Summary copied to clipboard!");
         }
     </script>
 </body>
