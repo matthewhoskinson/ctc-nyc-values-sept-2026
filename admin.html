@@ -15,7 +15,7 @@
             font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
         }
 
-        /* Updated standard category styles */
+        /* Category Color Scheme */
         .cat-creative { background-color: #d1fae5; border-color: #10b981; color: #065f46; } /* Creative - Green */
         .cat-results { background-color: #dbeafe; border-color: #3b82f6; color: #1e40af; } /* Results - Blue */
         .cat-strategic { background-color: #fee2e2; border-color: #ef4444; color: #991b1b; } /* Strategic - Red */
@@ -63,7 +63,6 @@
                     <option value="Operations">Operations Team</option>
                     <option value="Fundraising">Fundraising Team</option>
                     <option value="Catalysts">Catalysts Team</option>
-                    <option value="NY">NY Team</option>
                 </select>
             </div>
 
@@ -93,7 +92,7 @@
             
             <!-- VIEW 1: Leaderboard (#1-10 Left, #11-20 Right) -->
             <div id="tab-view-1" class="space-y-4">
-                <p class="text-xs text-stone-500 italic">Scores are averaged (Lower score = Higher priority rank across team members).</p>
+                <p class="text-xs text-stone-500 italic">Scores are averaged (Lower aggregate score = Higher priority rank across team members).</p>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <h3 class="text-xs font-bold uppercase tracking-wider text-amber-700 mb-3">Top Priority (#1 - #10)</h3>
@@ -189,7 +188,7 @@
             valuesData.forEach(v => totals[v.id] = 0);
             filtered.forEach(s => s.rankings.forEach(r => totals[r.id] += r.score));
 
-            // INVERTED SCORING LOGIC: Ascending sort by score
+            // INVERTED SCORING LOGIC: Ascending sort by score (Lower score = higher rank)
             let sorted = Object.keys(totals).map(id => ({
                 id: parseInt(id),
                 avgScore: (totals[id] / filtered.length).toFixed(1)
@@ -230,7 +229,7 @@
                             <span class="w-8 h-8 rounded-full bg-amber-600 text-white font-bold flex items-center justify-center text-sm">#${index + 1}</span>
                             <div>
                                 <span class="text-xs px-2.5 py-1 rounded-md font-bold border ${val.cat}">${val.name}</span>
-                                <div class="text-xs text-stone-500 mt-1">Score: ${item.avgScore}</div>
+                                <div class="text-xs text-stone-500 mt-1">Avg Rank: ${item.avgScore}</div>
                             </div>
                         </div>
                         <div class="text-right">
