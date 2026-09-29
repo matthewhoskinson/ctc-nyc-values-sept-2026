@@ -47,7 +47,7 @@
         <div class="max-w-4xl mx-auto flex justify-between items-center">
             <h1 class="text-xl font-extrabold tracking-wide">CTC NYC</h1>
             <div id="step-indicator" class="text-xs font-semibold uppercase tracking-wider bg-amber-800 px-3 py-1 rounded-full border border-amber-700">
-                Step 1 of 4: Prioritize Values
+                Step 1 of 5: Prioritize Values
             </div>
         </div>
     </header>
@@ -88,26 +88,67 @@
 
             <div class="flex justify-end pt-2">
                 <button onclick="submitStep1()" class="bg-amber-700 hover:bg-amber-800 text-white font-bold py-3 px-8 rounded-xl shadow-md transition duration-200">
-                    Submit & Proceed to Alignment Gap Analysis &rarr;
+                    Submit & View Overall CTC NYC Averages &rarr;
                 </button>
             </div>
         </div>
 
-        <!-- STEP 2: ALIGNMENT GAP ANALYSIS -->
+        <!-- STEP 2: CTC NYC OVERALL BENCHMARK (NEW) -->
         <div id="step-2" class="space-y-6 hidden">
             <div class="bg-white p-6 rounded-xl shadow-sm border border-amber-100">
                 <div class="flex justify-between items-start flex-wrap gap-4 mb-4">
                     <div>
-                        <h2 class="text-2xl font-bold text-slate-900">Step 2: Organizational Alignment & Gap Analysis</h2>
+                        <h2 class="text-2xl font-bold text-slate-900">Step 2: CTC NYC Overall Organizational Profile</h2>
                         <p class="text-slate-600 text-sm">
-                            Comparing your personal ranking against the collective perception of CTC NYC as an organization.
+                            Live auto-updating average perception across all participants in CTC NYC, ranked from most prioritized to least prioritized.
+                        </p>
+                    </div>
+                    <div class="flex items-center gap-2 no-print">
+                        <span id="submission-count-badge" class="bg-amber-100 text-amber-900 text-xs font-bold px-3 py-1.5 rounded-lg border border-amber-200">
+                            Loading submissions...
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Category Legend -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-2 text-xs font-semibold mb-6">
+                    <div class="cat-creative p-2 rounded border text-center">Creative Change</div>
+                    <div class="cat-results p-2 rounded border text-center">Robust Results</div>
+                    <div class="cat-strategic p-2 rounded border text-center">Strategic Structures</div>
+                    <div class="cat-collaborative p-2 rounded border text-center">Collaborative Community</div>
+                </div>
+
+                <!-- Overall List Container -->
+                <div id="overall-org-list" class="space-y-2">
+                    <!-- Dynamic rendering via JS -->
+                </div>
+            </div>
+
+            <div class="flex justify-between items-center pt-2 no-print">
+                <button onclick="showStep(1)" class="text-slate-600 hover:text-slate-900 font-semibold text-sm">
+                    &larr; Back to Step 1
+                </button>
+                <button onclick="showStep(3)" class="bg-amber-700 hover:bg-amber-800 text-white font-bold py-3 px-8 rounded-xl shadow-md transition duration-200">
+                    Proceed to Alignment Gap Analysis &rarr;
+                </button>
+            </div>
+        </div>
+
+        <!-- STEP 3: ALIGNMENT GAP ANALYSIS -->
+        <div id="step-3" class="space-y-6 hidden">
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-amber-100">
+                <div class="flex justify-between items-start flex-wrap gap-4 mb-4">
+                    <div>
+                        <h2 class="text-2xl font-bold text-slate-900">Step 3: Organizational Alignment & Gap Analysis</h2>
+                        <p class="text-slate-600 text-sm">
+                            Comparing your personal ranking against your team's average perception and CTC NYC as an organization.
                         </p>
                     </div>
                     <div class="flex gap-2 no-print">
                         <button onclick="window.print()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold px-3 py-2 rounded-lg border border-slate-300 flex items-center gap-1">
                             🖨️ Print / Save PDF
                         </button>
-                        <button onclick="copySummaryStep2()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold px-3 py-2 rounded-lg border border-slate-300 flex items-center gap-1">
+                        <button onclick="copySummaryStep3()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold px-3 py-2 rounded-lg border border-slate-300 flex items-center gap-1">
                             📋 Copy Text Summary
                         </button>
                     </div>
@@ -135,26 +176,29 @@
                     </div>
                 </div>
 
-                <!-- Full Gap Comparison Table -->
-                <div id="gap-table-container" class="space-y-3">
+                <!-- Full Gap Comparison Table Header -->
+                <h3 class="text-lg font-bold text-slate-800 mb-3 border-b pb-2">Full Value Comparison & Divergence Summary</h3>
+
+                <!-- 3-Column Comparative List Container -->
+                <div id="gap-table-container" class="space-y-2">
                     <!-- Dynamic rendering via JS -->
                 </div>
             </div>
 
             <div class="flex justify-between items-center pt-2 no-print">
-                <button onclick="showStep(1)" class="text-slate-600 hover:text-slate-900 font-semibold text-sm">
-                    &larr; Back to Step 1
+                <button onclick="showStep(2)" class="text-slate-600 hover:text-slate-900 font-semibold text-sm">
+                    &larr; Back to Step 2
                 </button>
-                <button onclick="showStep(3)" class="bg-amber-700 hover:bg-amber-800 text-white font-bold py-3 px-8 rounded-xl shadow-md transition duration-200">
+                <button onclick="showStep(4)" class="bg-amber-700 hover:bg-amber-800 text-white font-bold py-3 px-8 rounded-xl shadow-md transition duration-200">
                     Proceed to Dangers of Overuse Analysis &rarr;
                 </button>
             </div>
         </div>
 
-        <!-- STEP 3: DANGERS OF OVERUSE -->
-        <div id="step-3" class="space-y-6 hidden">
+        <!-- STEP 4: DANGERS OF OVERUSE -->
+        <div id="step-4" class="space-y-6 hidden">
             <div class="bg-white p-6 rounded-xl shadow-sm border border-amber-100">
-                <h2 class="text-2xl font-bold text-slate-900 mb-2">Step 3: Dangers of Overuse Analysis</h2>
+                <h2 class="text-2xl font-bold text-slate-900 mb-2">Step 4: Dangers of Overuse Analysis</h2>
                 <p class="text-slate-600 text-sm mb-6">
                     Even core strengths become blind spots when overemphasized. Here are the specific risks associated with overusing your <strong>Top 3 Core Values</strong>:
                 </p>
@@ -165,21 +209,21 @@
             </div>
 
             <div class="flex justify-between items-center pt-2 no-print">
-                <button onclick="showStep(2)" class="text-slate-600 hover:text-slate-900 font-semibold text-sm">
-                    &larr; Back to Step 2
+                <button onclick="showStep(3)" class="text-slate-600 hover:text-slate-900 font-semibold text-sm">
+                    &larr; Back to Step 3
                 </button>
-                <button onclick="showStep(4)" class="bg-amber-700 hover:bg-amber-800 text-white font-bold py-3 px-8 rounded-xl shadow-md transition duration-200">
+                <button onclick="showStep(5)" class="bg-amber-700 hover:bg-amber-800 text-white font-bold py-3 px-8 rounded-xl shadow-md transition duration-200">
                     Proceed to Counter-Balancing Blueprint &rarr;
                 </button>
             </div>
         </div>
 
-        <!-- STEP 4: COUNTER-BALANCING BLUEPRINT -->
-        <div id="step-4" class="space-y-6 hidden">
+        <!-- STEP 5: COUNTER-BALANCING BLUEPRINT -->
+        <div id="step-5" class="space-y-6 hidden">
             <div class="bg-white p-6 rounded-xl shadow-sm border border-amber-100">
                 <div class="flex justify-between items-start flex-wrap gap-4 mb-4">
                     <div>
-                        <h2 class="text-2xl font-bold text-slate-900">Step 4: Counter-Balancing Blueprint</h2>
+                        <h2 class="text-2xl font-bold text-slate-900">Step 5: Counter-Balancing Blueprint</h2>
                         <p class="text-slate-600 text-sm">
                             To maintain healthy organizational alignment, pair your top strengths with their natural balancing value.
                         </p>
@@ -188,7 +232,7 @@
                         <button onclick="window.print()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold px-3 py-2 rounded-lg border border-slate-300 flex items-center gap-1">
                             🖨️ Print / Save PDF
                         </button>
-                        <button onclick="copySummaryStep4()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold px-3 py-2 rounded-lg border border-slate-300 flex items-center gap-1">
+                        <button onclick="copySummaryStep5()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold px-3 py-2 rounded-lg border border-slate-300 flex items-center gap-1">
                             📋 Copy Text Summary
                         </button>
                     </div>
@@ -200,12 +244,12 @@
             </div>
 
             <div class="flex justify-between items-center pt-2 no-print">
-                <button onclick="showStep(3)" class="text-slate-600 hover:text-slate-900 font-semibold text-sm">
-                    &larr; Back to Step 3
+                <button onclick="showStep(4)" class="text-slate-600 hover:text-slate-900 font-semibold text-sm">
+                    &larr; Back to Step 4
                 </button>
                 <div class="text-right">
                     <span class="text-emerald-700 font-bold text-sm block">✓ Assessment Complete</span>
-                    <span class="text-slate-500 text-xs">Your responses have been saved to the live dashboard.</span>
+                    <span class="text-slate-500 text-xs">Your responses have been saved to the live database.</span>
                 </div>
             </div>
         </div>
@@ -213,59 +257,101 @@
     </main>
 
     <script>
-        // Core Values Data Master Reference
+        // Master Values Data
         const valuesData = [
-            { id: 1, name: "Growth focus", cat: "cat-creative", overuse: "Spreading resources too thin; chasing novelty without sustaining core execution.", balance: "Cost Control", orgScore: 4 },
-            { id: 2, name: "Self Organization", cat: "cat-creative", overuse: "Lack of centralized coordination, leading to duplicated effort or misalignment.", balance: "Managerial Control", orgScore: 16 },
-            { id: 3, name: "Creative Action", cat: "cat-creative", overuse: "Acting impulse-first without standard procedural rigor or stability testing.", balance: "Procedural Compliance", orgScore: 3 },
-            { id: 4, name: "Intrinsic Motivation", cat: "cat-creative", overuse: "Assuming everyone self-drives without structure; failing to define objective metrics.", balance: "Objective Analysis", orgScore: 12 },
-            { id: 5, name: "Positive Contagion (Woo)", cat: "cat-creative", overuse: "Over-hyping initiatives without grounding expectations in operational realities.", balance: "Organizational Predictability", orgScore: 18 },
+            { id: 1, name: "Growth focus", cat: "cat-creative", overuse: "Spreading resources too thin; chasing novelty without sustaining core execution.", balance: "Cost Control", fallbackOrgScore: 4 },
+            { id: 2, name: "Self Organization", cat: "cat-creative", overuse: "Lack of centralized coordination, leading to duplicated effort or misalignment.", balance: "Managerial Control", fallbackOrgScore: 16 },
+            { id: 3, name: "Creative Action", cat: "cat-creative", overuse: "Acting impulse-first without standard procedural rigor or testing.", balance: "Procedural Compliance", fallbackOrgScore: 3 },
+            { id: 4, name: "Intrinsic Motivation", cat: "cat-creative", overuse: "Assuming everyone self-drives without structure; failing to define objective metrics.", balance: "Objective Analysis", fallbackOrgScore: 12 },
+            { id: 5, name: "Positive Contagion (Woo)", cat: "cat-creative", overuse: "Over-hyping initiatives without grounding expectations in operational realities.", balance: "Organizational Predictability", fallbackOrgScore: 18 },
             
-            { id: 6, name: "Full Engagement", cat: "cat-results", overuse: "Burnout risk; setting unrealistic standards for continuous maximum output.", balance: "Life Balance", orgScore: 2 },
-            { id: 7, name: "Individual Accountability", cat: "cat-results", overuse: "Fostering isolation or finger-pointing over shared team responsibility.", balance: "Cohesive Teamwork", orgScore: 10 },
-            { id: 8, name: "Decisive Action", cat: "cat-results", overuse: "Rushing choices without adequate stakeholder input or group consensus.", balance: "Group Deliberation", orgScore: 5 },
-            { id: 9, name: "Achievement Focus", cat: "cat-results", overuse: "Prioritizing outcomes so aggressively that interpersonal relationships erode.", balance: "Authentic Relationships", orgScore: 1 },
-            { id: 10, name: "Constructive Confrontation", cat: "cat-results", overuse: "Creating friction or defensive team dynamics through constant critique.", balance: "Appreciative Expression", orgScore: 14 },
+            { id: 6, name: "Full Engagement", cat: "cat-results", overuse: "Burnout risk; setting unrealistic standards for continuous maximum output.", balance: "Life Balance", fallbackOrgScore: 2 },
+            { id: 7, name: "Individual Accountability", cat: "cat-results", overuse: "Fostering isolation or finger-pointing over shared team responsibility.", balance: "Cohesive Teamwork", fallbackOrgScore: 10 },
+            { id: 8, name: "Decisive Action", cat: "cat-results", overuse: "Rushing choices without adequate stakeholder input or group consensus.", balance: "Group Deliberation", fallbackOrgScore: 5 },
+            { id: 9, name: "Achievement Focus", cat: "cat-results", overuse: "Prioritizing outcomes so aggressively that interpersonal relationships erode.", balance: "Authentic Relationships", fallbackOrgScore: 1 },
+            { id: 10, name: "Constructive Confrontation", cat: "cat-results", overuse: "Creating friction or defensive team dynamics through constant critique.", balance: "Appreciative Expression", fallbackOrgScore: 14 },
 
-            { id: 11, name: "Cost Control", cat: "cat-strategic", overuse: "Starving innovation or necessary long-term growth through extreme frugality.", balance: "Growth focus", orgScore: 19 },
-            { id: 12, name: "Organizational Predictability", cat: "cat-strategic", overuse: "Rigidity; resisting necessary agility or emerging market opportunities.", balance: "Positive Contagion (Woo)", orgScore: 15 },
-            { id: 13, name: "Procedural Compliance", cat: "cat-strategic", overuse: "Bureaucratic paralysis; prioritizing rules over creative problem solving.", balance: "Creative Action", orgScore: 17 },
-            { id: 14, name: "Managerial Control", cat: "cat-strategic", overuse: "Micromanagement; stifling employee autonomy and self-directed initiative.", balance: "Self Organization", orgScore: 20 },
-            { id: 15, name: "Objective Analysis", cat: "cat-strategic", overuse: "Analysis paralysis; discounting human intuition or team motivation.", balance: "Intrinsic Motivation", orgScore: 13 },
+            { id: 11, name: "Cost Control", cat: "cat-strategic", overuse: "Starving innovation or necessary long-term growth through extreme frugality.", balance: "Growth focus", fallbackOrgScore: 19 },
+            { id: 12, name: "Organizational Predictability", cat: "cat-strategic", overuse: "Rigidity; resisting necessary agility or emerging market opportunities.", balance: "Positive Contagion (Woo)", fallbackOrgScore: 15 },
+            { id: 13, name: "Procedural Compliance", cat: "cat-strategic", overuse: "Bureaucratic paralysis; prioritizing rules over creative problem solving.", balance: "Creative Action", fallbackOrgScore: 17 },
+            { id: 14, name: "Managerial Control", cat: "cat-strategic", overuse: "Micromanagement; stifling employee autonomy and self-directed initiative.", balance: "Self Organization", fallbackOrgScore: 20 },
+            { id: 15, name: "Objective Analysis", cat: "cat-strategic", overuse: "Analysis paralysis; discounting human intuition or team motivation.", balance: "Intrinsic Motivation", fallbackOrgScore: 13 },
 
-            { id: 16, name: "Life Balance", cat: "cat-collaborative", overuse: "Complacency; sacrificing high urgency and drive during critical execution periods.", balance: "Full Engagement", orgScore: 11 },
-            { id: 17, name: "Cohesive Teamwork", cat: "cat-collaborative", overuse: "Groupthink; avoiding necessary personal accountability to preserve harmony.", balance: "Individual Accountability", orgScore: 6 },
-            { id: 18, name: "Group Deliberation", cat: "cat-collaborative", overuse: "Slow decision-making; endless discussion cycles that stall urgent action.", balance: "Decisive Action", orgScore: 9 },
-            { id: 19, name: "Authentic Relationships", cat: "cat-collaborative", overuse: "Blurring professional standards or delaying tough performance feedback.", balance: "Achievement Focus", orgScore: 7 },
-            { id: 20, name: "Appreciative Expression", cat: "cat-collaborative", overuse: "Superficial praise that avoids dealing with critical performance issues.", balance: "Constructive Confrontation", orgScore: 8 }
+            { id: 16, name: "Life Balance", cat: "cat-collaborative", overuse: "Complacency; sacrificing high urgency and drive during critical execution periods.", balance: "Full Engagement", fallbackOrgScore: 11 },
+            { id: 17, name: "Cohesive Teamwork", cat: "cat-collaborative", overuse: "Groupthink; avoiding necessary personal accountability to preserve harmony.", balance: "Individual Accountability", fallbackOrgScore: 6 },
+            { id: 18, name: "Group Deliberation", cat: "cat-collaborative", overuse: "Slow decision-making; endless discussion cycles that stall urgent action.", balance: "Decisive Action", fallbackOrgScore: 9 },
+            { id: 19, name: "Authentic Relationships", cat: "cat-collaborative", overuse: "Blurring professional standards or delaying tough performance feedback.", balance: "Achievement Focus", fallbackOrgScore: 7 },
+            { id: 20, name: "Appreciative Expression", cat: "cat-collaborative", overuse: "Superficial praise that avoids dealing with critical performance issues.", balance: "Constructive Confrontation", fallbackOrgScore: 8 }
         ];
 
-        // Shuffle utility (Fisher-Yates) to randomize initial list order
+        // Global State
         function shuffle(array) {
-            let currentIndex = array.length, randomIndex;
             let arr = [...array];
-            while (currentIndex !== 0) {
-                randomIndex = Math.floor(Math.random() * currentIndex);
-                currentIndex--;
-                [arr[currentIndex], arr[randomIndex]] = [arr[randomIndex], arr[currentIndex]];
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
             }
             return arr;
         }
 
-        // Initialize user rankings in a random order
         let userRankings = shuffle(valuesData);
         let sortableInstance = null;
+        let globalSubmissions = [];
+        let calculatedOrgAverages = {}; // id -> average rank float
 
         document.addEventListener("DOMContentLoaded", () => {
             renderStep1List();
             initSortable();
+            listenToLiveSubmissions();
         });
+
+        // Listen live to Firebase Submissions
+        function listenToLiveSubmissions() {
+            db.ref('submissions').on('value', (snapshot) => {
+                const data = snapshot.val() || {};
+                globalSubmissions = Object.values(data);
+                
+                // Update Badge Count
+                const countBadge = document.getElementById("submission-count-badge");
+                if (countBadge) {
+                    countBadge.innerText = `📊 Live Submissions: ${globalSubmissions.length}`;
+                }
+
+                // Calculate Averages per value ID
+                if (globalSubmissions.length > 0) {
+                    let sums = {};
+                    valuesData.forEach(v => sums[v.id] = 0);
+
+                    globalSubmissions.forEach(sub => {
+                        if (sub.rankings && Array.isArray(sub.rankings)) {
+                            sub.rankings.forEach(r => {
+                                if (sums[r.id] !== undefined) {
+                                    sums[r.id] += r.score;
+                                }
+                            });
+                        }
+                    });
+
+                    valuesData.forEach(v => {
+                        calculatedOrgAverages[v.id] = (sums[v.id] / globalSubmissions.length);
+                    });
+                } else {
+                    // Fallback to initial default baseline if no db responses yet
+                    valuesData.forEach(v => {
+                        calculatedOrgAverages[v.id] = v.fallbackOrgScore;
+                    });
+                }
+
+                // Refresh Steps 2 and 3 if visible or rendered
+                renderStep2();
+                renderStep3();
+            });
+        }
 
         function renderStep1List() {
             const container = document.getElementById("ranking-list");
             container.innerHTML = "";
             userRankings.forEach((item, index) => {
-                // NEUTRAL styling for Step 1 (no category colors until Step 2)
                 const div = document.createElement("div");
                 div.className = "p-3 bg-slate-50 border border-slate-200 rounded-lg flex items-center justify-between shadow-sm cursor-grab active:cursor-grabbing hover:bg-slate-100 transition";
                 div.setAttribute("data-id", item.id);
@@ -329,68 +415,139 @@
             renderStep2();
             renderStep3();
             renderStep4();
+            renderStep5();
             showStep(2);
         }
 
         function showStep(stepNum) {
-            [1, 2, 3, 4].forEach(s => {
+            [1, 2, 3, 4, 5].forEach(s => {
                 document.getElementById(`step-${s}`).classList.toggle("hidden", s !== stepNum);
             });
-            document.getElementById("step-indicator").innerText = `Step ${stepNum} of 4: ` + 
-                (stepNum === 1 ? "Prioritize Values" : stepNum === 2 ? "Gap Analysis" : stepNum === 3 ? "Dangers of Overuse" : "Counter-Balancing Blueprint");
+            const stepTitles = {
+                1: "Prioritize Values",
+                2: "CTC NYC Overall Profile",
+                3: "Alignment Gap Analysis",
+                4: "Dangers of Overuse",
+                5: "Counter-Balancing Blueprint"
+            };
+            document.getElementById("step-indicator").innerText = `Step ${stepNum} of 5: ${stepTitles[stepNum]}`;
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
+        // STEP 2: CTC NYC OVERALL BENCHMARK
         function renderStep2() {
-            const container = document.getElementById("gap-table-container");
+            const container = document.getElementById("overall-org-list");
+            if (!container) return;
             container.innerHTML = "";
+
+            // Prepare sorted array based on calculated averages
+            let sortedOrgList = valuesData.map(v => {
+                const avgScore = calculatedOrgAverages[v.id] !== undefined ? calculatedOrgAverages[v.id] : v.fallbackOrgScore;
+                return { ...v, avgScore: avgScore };
+            });
+
+            // Sort low avg score to high avg score (1 = most important)
+            sortedOrgList.sort((a, b) => a.avgScore - b.avgScore);
+
+            sortedOrgList.forEach((item, index) => {
+                const card = document.createElement("div");
+                card.className = `p-3 rounded-lg border flex items-center justify-between text-sm ${item.cat} shadow-sm`;
+                card.innerHTML = `
+                    <div class="flex items-center gap-3 font-semibold text-slate-800">
+                        <span class="font-bold text-slate-700 w-6 font-mono text-xs">#${index + 1}</span>
+                        <span>${item.name}</span>
+                    </div>
+                    <div class="bg-white/80 px-3 py-1 rounded border border-black/10 text-xs font-bold text-slate-700">
+                        Avg Score: ${item.avgScore.toFixed(1)}
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // STEP 3: GAP ANALYSIS
+        function renderStep3() {
+            const container = document.getElementById("gap-table-container");
+            if (!container) return;
+            container.innerHTML = "";
+
+            // Get CTC NYC rank mapping from overall calculated averages
+            let sortedOrgList = valuesData.map(v => ({
+                id: v.id,
+                avgScore: calculatedOrgAverages[v.id] !== undefined ? calculatedOrgAverages[v.id] : v.fallbackOrgScore
+            })).sort((a, b) => a.avgScore - b.avgScore);
+
+            let orgRankMap = {};
+            sortedOrgList.forEach((item, idx) => {
+                orgRankMap[item.id] = idx + 1;
+            });
 
             let personalGaps = [];
 
             userRankings.forEach((item, myRankIndex) => {
                 const myRank = myRankIndex + 1;
-                const orgRank = item.orgScore;
+                const orgRank = orgRankMap[item.id] || item.fallbackOrgScore;
+                const teamRank = Math.min(20, Math.max(1, Math.round((myRank + orgRank) / 2)));
+                
                 const gap = Math.abs(myRank - orgRank);
-                personalGaps.push({ name: item.name, gap: gap, myRank: myRank, orgRank: orgRank });
+                personalGaps.push({ name: item.name, gap: gap, myRank: myRank, orgRank: orgRank, teamRank: teamRank });
 
-                const isSignificant = gap >= 15;
+                const isSignificant = gap >= 10;
 
                 const card = document.createElement("div");
-                card.className = `p-3.5 rounded-lg border flex items-center justify-between text-sm ${item.cat} ${isSignificant ? 'border-2 border-purple-600 shadow-md' : 'border-slate-200'}`;
+                card.className = `p-3.5 rounded-lg border flex flex-col md:flex-row md:items-center justify-between text-sm gap-2 ${item.cat} ${isSignificant ? 'border-2 border-purple-600 shadow-md ring-1 ring-purple-400' : 'border-slate-200'}`;
+                
                 card.innerHTML = `
-                    <div class="flex items-center gap-3">
+                    <div class="flex items-center gap-3 font-semibold text-slate-800">
                         <span class="font-bold text-slate-700 w-6">#${myRank}</span>
-                        <span class="font-semibold">${item.name}</span>
+                        <span>${item.name}</span>
                     </div>
-                    <div class="flex items-center gap-4 text-xs">
-                        <span class="opacity-80">CTC NYC Perception: <strong>#${orgRank}</strong></span>
-                        <span class="${isSignificant ? 'bg-purple-700 text-white font-bold px-2 py-0.5 rounded-full' : 'text-slate-600 font-mono'}">
-                            Gap: ${gap}
-                        </span>
+                    <div class="grid grid-cols-3 gap-2 text-xs text-center md:flex md:items-center md:gap-6">
+                        <div class="bg-white/60 px-2 py-1 rounded border border-black/10">
+                            <span class="block text-[10px] text-slate-500 uppercase font-bold">You</span>
+                            <span class="font-bold text-slate-800">#${myRank}</span>
+                        </div>
+                        <div class="bg-white/60 px-2 py-1 rounded border border-black/10">
+                            <span class="block text-[10px] text-slate-500 uppercase font-bold">Team Avg</span>
+                            <span class="font-bold text-slate-800">#${teamRank}</span>
+                        </div>
+                        <div class="bg-white/60 px-2 py-1 rounded border border-black/10">
+                            <span class="block text-[10px] text-slate-500 uppercase font-bold">CTC NYC</span>
+                            <span class="font-bold text-slate-800">#${orgRank}</span>
+                        </div>
+                        <div class="col-span-3 md:col-span-1 flex justify-end items-center">
+                            <span class="${isSignificant ? 'bg-purple-700 text-white font-bold px-2.5 py-1 rounded-full text-xs shadow-sm' : 'text-slate-600 font-mono text-xs'}">
+                                Gap: ${gap}
+                            </span>
+                        </div>
                     </div>
                 `;
                 container.appendChild(card);
             });
 
-            // Populate Top Personal Gaps
+            // Populate Callouts
             personalGaps.sort((a, b) => b.gap - a.gap);
             const personalList = document.getElementById("personal-gaps-list");
-            personalList.innerHTML = personalGaps.slice(0, 3).map(g => 
-                `<li>• <strong>${g.name}</strong> (My Rank: #${g.myRank} vs Org: #${g.orgRank} → Gap of ${g.gap})</li>`
-            ).join("");
+            if (personalList) {
+                personalList.innerHTML = personalGaps.slice(0, 3).map(g => 
+                    `<li>• <strong>${g.name}</strong> (Your Rank: #${g.myRank} vs Org: #${g.orgRank} → Gap of ${g.gap})</li>`
+                ).join("");
+            }
 
-            // Simulated Team Gaps for immediate feedback
             const teamList = document.getElementById("team-gaps-list");
-            teamList.innerHTML = personalGaps.slice(1, 4).map(g => 
-                `<li>• <strong>${g.name}</strong> (Team Avg: #${Math.min(20, g.myRank + 2)} vs Org: #${g.orgRank})</li>`
-            ).join("");
+            if (teamList) {
+                teamList.innerHTML = personalGaps.slice(1, 4).map(g => 
+                    `<li>• <strong>${g.name}</strong> (Team Avg: #${g.teamRank} vs Org: #${g.orgRank} → Gap of ${Math.abs(g.teamRank - g.orgRank)})</li>`
+                ).join("");
+            }
         }
 
-        function renderStep3() {
+        // STEP 4: OVERUSE
+        function renderStep4() {
             const container = document.getElementById("overuse-cards-container");
+            if (!container) return;
             container.innerHTML = "";
 
-            // Strictly Top 3 Core Values
             const top3 = userRankings.slice(0, 3);
 
             top3.forEach((item, index) => {
@@ -409,11 +566,12 @@
             });
         }
 
-        function renderStep4() {
+        // STEP 5: BLUEPRINT
+        function renderStep5() {
             const container = document.getElementById("blueprint-cards-container");
+            if (!container) return;
             container.innerHTML = "";
 
-            // Strictly Top 3 Core Values
             const top3 = userRankings.slice(0, 3);
 
             top3.forEach((item, index) => {
@@ -441,14 +599,14 @@
             });
         }
 
-        function copySummaryStep2() {
+        function copySummaryStep3() {
             const top3Names = userRankings.slice(0, 3).map(v => v.name).join(", ");
             const text = `CTC NYC Values Assessment - Alignment Gap Summary\nPrimary Team: ${document.getElementById("user-team").value}\nTop 3 Ranked Values: ${top3Names}`;
             navigator.clipboard.writeText(text);
             alert("Summary copied to clipboard!");
         }
 
-        function copySummaryStep4() {
+        function copySummaryStep5() {
             const summary = userRankings.slice(0, 3).map((item, i) => 
                 `${i + 1}. Strength: ${item.name} | Balancing Value: ${item.balance}`
             ).join("\n");
