@@ -44,7 +44,7 @@
 
     <!-- Header Navigation -->
     <header class="bg-amber-900 text-amber-50 p-4 shadow-md no-print">
-        <div class="max-w-4xl mx-auto flex justify-between items-center">
+        <div class="max-w-5xl mx-auto flex justify-between items-center">
             <h1 class="text-xl font-extrabold tracking-wide">CTC NYC</h1>
             <div id="step-indicator" class="text-xs font-semibold uppercase tracking-wider bg-amber-800 px-3 py-1 rounded-full border border-amber-700">
                 Step 1 of 5: Prioritize Values
@@ -52,7 +52,7 @@
         </div>
     </header>
 
-    <main class="max-w-4xl mx-auto p-4 sm:p-6">
+    <main class="max-w-5xl mx-auto p-4 sm:p-6">
 
         <!-- STEP 1: RANKING -->
         <div id="step-1" class="space-y-6">
@@ -93,7 +93,7 @@
             </div>
         </div>
 
-        <!-- STEP 2: CTC NYC OVERALL BENCHMARK (NEW) -->
+        <!-- STEP 2: CTC NYC OVERALL BENCHMARK -->
         <div id="step-2" class="space-y-6 hidden">
             <div class="bg-white p-6 rounded-xl shadow-sm border border-amber-100">
                 <div class="flex justify-between items-start flex-wrap gap-4 mb-4">
@@ -162,7 +162,7 @@
                     <div class="cat-collaborative p-2 rounded border text-center">Collaborative Community</div>
                 </div>
 
-                <!-- Callout Cards for Top Gaps -->
+                <!-- Callout Cards for Top Gaps (Unchanged Top Section) -->
                 <div class="grid md:grid-cols-2 gap-4 mb-6">
                     <div class="bg-purple-50 border border-purple-200 p-4 rounded-xl">
                         <h3 class="font-bold text-purple-900 text-sm mb-1">Top Gaps: Personal vs. CTC NYC Perception</h3>
@@ -176,12 +176,34 @@
                     </div>
                 </div>
 
-                <!-- Full Gap Comparison Table Header -->
-                <h3 class="text-lg font-bold text-slate-800 mb-3 border-b pb-2">Full Value Comparison & Divergence Summary</h3>
+                <!-- Full Gap Comparison Header -->
+                <h3 class="text-lg font-bold text-slate-800 mb-3 border-b pb-2">3-Column Comparative Ranking & Gap Analysis</h3>
 
-                <!-- 3-Column Comparative List Container -->
-                <div id="gap-table-container" class="space-y-2">
-                    <!-- Dynamic rendering via JS -->
+                <!-- 3-COLUMN SIDE-BY-SIDE COMPARATIVE LAYOUT -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                    <!-- Column 1: Participant Ranking -->
+                    <div class="space-y-2">
+                        <div class="bg-slate-800 text-white font-bold text-xs uppercase p-2.5 rounded-lg text-center shadow-sm">
+                            Participant Rank
+                        </div>
+                        <div id="col-participant-list" class="space-y-2"></div>
+                    </div>
+
+                    <!-- Column 2: Participant's Team Ranking -->
+                    <div class="space-y-2">
+                        <div class="bg-slate-800 text-white font-bold text-xs uppercase p-2.5 rounded-lg text-center shadow-sm">
+                            Team Rank
+                        </div>
+                        <div id="col-team-list" class="space-y-2"></div>
+                    </div>
+
+                    <!-- Column 3: CTC NYC Ranking -->
+                    <div class="space-y-2">
+                        <div class="bg-slate-800 text-white font-bold text-xs uppercase p-2.5 rounded-lg text-center shadow-sm">
+                            CTC NYC Rank
+                        </div>
+                        <div id="col-org-list" class="space-y-2"></div>
+                    </div>
                 </div>
             </div>
 
@@ -200,7 +222,7 @@
             <div class="bg-white p-6 rounded-xl shadow-sm border border-amber-100">
                 <h2 class="text-2xl font-bold text-slate-900 mb-2">Step 4: Dangers of Overuse Analysis</h2>
                 <p class="text-slate-600 text-sm mb-6">
-                    Even core strengths become blind spots when overemphasized. Here are the specific risks associated with overusing your <strong>Top 3 Core Values</strong>:
+                    Even core organizational strengths become blind spots when overemphasized. Here are the specific risks associated with overusing <strong>CTC NYC's Top 3 Core Values</strong>:
                 </p>
 
                 <div id="overuse-cards-container" class="space-y-4">
@@ -225,7 +247,7 @@
                     <div>
                         <h2 class="text-2xl font-bold text-slate-900">Step 5: Counter-Balancing Blueprint</h2>
                         <p class="text-slate-600 text-sm">
-                            To maintain healthy organizational alignment, pair your top strengths with their natural balancing value.
+                            To maintain healthy organizational alignment, pair CTC NYC's top core strengths with their natural balancing value.
                         </p>
                     </div>
                     <div class="flex gap-2 no-print">
@@ -259,29 +281,29 @@
     <script>
         // Master Values Data
         const valuesData = [
-            { id: 1, name: "Growth focus", cat: "cat-creative", overuse: "Spreading resources too thin; chasing novelty without sustaining core execution.", balance: "Cost Control", fallbackOrgScore: 4 },
-            { id: 2, name: "Self Organization", cat: "cat-creative", overuse: "Lack of centralized coordination, leading to duplicated effort or misalignment.", balance: "Managerial Control", fallbackOrgScore: 16 },
-            { id: 3, name: "Creative Action", cat: "cat-creative", overuse: "Acting impulse-first without standard procedural rigor or testing.", balance: "Procedural Compliance", fallbackOrgScore: 3 },
-            { id: 4, name: "Intrinsic Motivation", cat: "cat-creative", overuse: "Assuming everyone self-drives without structure; failing to define objective metrics.", balance: "Objective Analysis", fallbackOrgScore: 12 },
-            { id: 5, name: "Positive Contagion (Woo)", cat: "cat-creative", overuse: "Over-hyping initiatives without grounding expectations in operational realities.", balance: "Organizational Predictability", fallbackOrgScore: 18 },
+            { id: 1, name: "Growth focus", cat: "cat-creative", overuse: "Danger of Overuse: Spreading resources too thin; chasing novelty without sustaining core execution.", balance: "Cost Control", fallbackOrgScore: 4 },
+            { id: 2, name: "Self Organization", cat: "cat-creative", overuse: "Danger of Overuse: Lack of centralized coordination, leading to duplicated effort or misalignment.", balance: "Managerial Control", fallbackOrgScore: 16 },
+            { id: 3, name: "Creative Action", cat: "cat-creative", overuse: "Danger of Overuse: Acting impulse-first without standard procedural rigor or testing.", balance: "Procedural Compliance", fallbackOrgScore: 3 },
+            { id: 4, name: "Intrinsic Motivation", cat: "cat-creative", overuse: "Danger of Overuse: Assuming everyone self-drives without structure; failing to define objective metrics.", balance: "Objective Analysis", fallbackOrgScore: 12 },
+            { id: 5, name: "Positive Contagion (Woo)", cat: "cat-creative", overuse: "Danger of Overuse: Over-hyping initiatives without grounding expectations in operational realities.", balance: "Organizational Predictability", fallbackOrgScore: 18 },
             
-            { id: 6, name: "Full Engagement", cat: "cat-results", overuse: "Burnout risk; setting unrealistic standards for continuous maximum output.", balance: "Life Balance", fallbackOrgScore: 2 },
-            { id: 7, name: "Individual Accountability", cat: "cat-results", overuse: "Fostering isolation or finger-pointing over shared team responsibility.", balance: "Cohesive Teamwork", fallbackOrgScore: 10 },
-            { id: 8, name: "Decisive Action", cat: "cat-results", overuse: "Rushing choices without adequate stakeholder input or group consensus.", balance: "Group Deliberation", fallbackOrgScore: 5 },
-            { id: 9, name: "Achievement Focus", cat: "cat-results", overuse: "Prioritizing outcomes so aggressively that interpersonal relationships erode.", balance: "Authentic Relationships", fallbackOrgScore: 1 },
-            { id: 10, name: "Constructive Confrontation", cat: "cat-results", overuse: "Creating friction or defensive team dynamics through constant critique.", balance: "Appreciative Expression", fallbackOrgScore: 14 },
+            { id: 6, name: "Full Engagement", cat: "cat-results", overuse: "Danger of Overuse: Burnout risk; setting unrealistic standards for continuous maximum output.", balance: "Life Balance", fallbackOrgScore: 2 },
+            { id: 7, name: "Individual Accountability", cat: "cat-results", overuse: "Danger of Overuse: Fostering isolation or finger-pointing over shared team responsibility.", balance: "Cohesive Teamwork", fallbackOrgScore: 10 },
+            { id: 8, name: "Decisive Action", cat: "cat-results", overuse: "Danger of Overuse: Rushing choices without adequate stakeholder input or group consensus.", balance: "Group Deliberation", fallbackOrgScore: 5 },
+            { id: 9, name: "Achievement Focus", cat: "cat-results", overuse: "Danger of Overuse: Prioritizing outcomes so aggressively that interpersonal relationships erode.", balance: "Authentic Relationships", fallbackOrgScore: 1 },
+            { id: 10, name: "Constructive Confrontation", cat: "cat-results", overuse: "Danger of Overuse: Creating friction or defensive team dynamics through constant critique.", balance: "Appreciative Expression", fallbackOrgScore: 14 },
 
-            { id: 11, name: "Cost Control", cat: "cat-strategic", overuse: "Starving innovation or necessary long-term growth through extreme frugality.", balance: "Growth focus", fallbackOrgScore: 19 },
-            { id: 12, name: "Organizational Predictability", cat: "cat-strategic", overuse: "Rigidity; resisting necessary agility or emerging market opportunities.", balance: "Positive Contagion (Woo)", fallbackOrgScore: 15 },
-            { id: 13, name: "Procedural Compliance", cat: "cat-strategic", overuse: "Bureaucratic paralysis; prioritizing rules over creative problem solving.", balance: "Creative Action", fallbackOrgScore: 17 },
-            { id: 14, name: "Managerial Control", cat: "cat-strategic", overuse: "Micromanagement; stifling employee autonomy and self-directed initiative.", balance: "Self Organization", fallbackOrgScore: 20 },
-            { id: 15, name: "Objective Analysis", cat: "cat-strategic", overuse: "Analysis paralysis; discounting human intuition or team motivation.", balance: "Intrinsic Motivation", fallbackOrgScore: 13 },
+            { id: 11, name: "Cost Control", cat: "cat-strategic", overuse: "Danger of Overuse: Starving innovation or necessary long-term growth through extreme frugality.", balance: "Growth focus", fallbackOrgScore: 19 },
+            { id: 12, name: "Organizational Predictability", cat: "cat-strategic", overuse: "Danger of Overuse: Rigidity; resisting necessary agility or emerging market opportunities.", balance: "Positive Contagion (Woo)", fallbackOrgScore: 15 },
+            { id: 13, name: "Procedural Compliance", cat: "cat-strategic", overuse: "Danger of Overuse: Bureaucratic paralysis; prioritizing rules over creative problem solving.", balance: "Creative Action", fallbackOrgScore: 17 },
+            { id: 14, name: "Managerial Control", cat: "cat-strategic", overuse: "Danger of Overuse: Micromanagement; stifling employee autonomy and self-directed initiative.", balance: "Self Organization", fallbackOrgScore: 20 },
+            { id: 15, name: "Objective Analysis", cat: "cat-strategic", overuse: "Danger of Overuse: Analysis paralysis; discounting human intuition or team motivation.", balance: "Intrinsic Motivation", fallbackOrgScore: 13 },
 
-            { id: 16, name: "Life Balance", cat: "cat-collaborative", overuse: "Complacency; sacrificing high urgency and drive during critical execution periods.", balance: "Full Engagement", fallbackOrgScore: 11 },
-            { id: 17, name: "Cohesive Teamwork", cat: "cat-collaborative", overuse: "Groupthink; avoiding necessary personal accountability to preserve harmony.", balance: "Individual Accountability", fallbackOrgScore: 6 },
-            { id: 18, name: "Group Deliberation", cat: "cat-collaborative", overuse: "Slow decision-making; endless discussion cycles that stall urgent action.", balance: "Decisive Action", fallbackOrgScore: 9 },
-            { id: 19, name: "Authentic Relationships", cat: "cat-collaborative", overuse: "Blurring professional standards or delaying tough performance feedback.", balance: "Achievement Focus", fallbackOrgScore: 7 },
-            { id: 20, name: "Appreciative Expression", cat: "cat-collaborative", overuse: "Superficial praise that avoids dealing with critical performance issues.", balance: "Constructive Confrontation", fallbackOrgScore: 8 }
+            { id: 16, name: "Life Balance", cat: "cat-collaborative", overuse: "Danger of Overuse: Complacency; sacrificing high urgency and drive during critical execution periods.", balance: "Full Engagement", fallbackOrgScore: 11 },
+            { id: 17, name: "Cohesive Teamwork", cat: "cat-collaborative", overuse: "Danger of Overuse: Groupthink; avoiding necessary personal accountability to preserve harmony.", balance: "Individual Accountability", fallbackOrgScore: 6 },
+            { id: 18, name: "Group Deliberation", cat: "cat-collaborative", overuse: "Danger of Overuse: Slow decision-making; endless discussion cycles that stall urgent action.", balance: "Decisive Action", fallbackOrgScore: 9 },
+            { id: 19, name: "Authentic Relationships", cat: "cat-collaborative", overuse: "Danger of Overuse: Blurring professional standards or delaying tough performance feedback.", balance: "Achievement Focus", fallbackOrgScore: 7 },
+            { id: 20, name: "Appreciative Expression", cat: "cat-collaborative", overuse: "Danger of Overuse: Superficial praise that avoids dealing with critical performance issues.", balance: "Constructive Confrontation", fallbackOrgScore: 8 }
         ];
 
         // Global State
@@ -297,7 +319,8 @@
         let userRankings = shuffle(valuesData);
         let sortableInstance = null;
         let globalSubmissions = [];
-        let calculatedOrgAverages = {}; // id -> average rank float
+        let calculatedOrgAverages = {};  // id -> float
+        let calculatedTeamAverages = {}; // id -> float
 
         document.addEventListener("DOMContentLoaded", () => {
             renderStep1List();
@@ -305,47 +328,63 @@
             listenToLiveSubmissions();
         });
 
-        // Listen live to Firebase Submissions
         function listenToLiveSubmissions() {
             db.ref('submissions').on('value', (snapshot) => {
                 const data = snapshot.val() || {};
                 globalSubmissions = Object.values(data);
                 
-                // Update Badge Count
                 const countBadge = document.getElementById("submission-count-badge");
                 if (countBadge) {
                     countBadge.innerText = `📊 Live Submissions: ${globalSubmissions.length}`;
                 }
 
-                // Calculate Averages per value ID
-                if (globalSubmissions.length > 0) {
-                    let sums = {};
-                    valuesData.forEach(v => sums[v.id] = 0);
+                computeAverages();
 
-                    globalSubmissions.forEach(sub => {
-                        if (sub.rankings && Array.isArray(sub.rankings)) {
-                            sub.rankings.forEach(r => {
-                                if (sums[r.id] !== undefined) {
-                                    sums[r.id] += r.score;
-                                }
-                            });
-                        }
-                    });
-
-                    valuesData.forEach(v => {
-                        calculatedOrgAverages[v.id] = (sums[v.id] / globalSubmissions.length);
-                    });
-                } else {
-                    // Fallback to initial default baseline if no db responses yet
-                    valuesData.forEach(v => {
-                        calculatedOrgAverages[v.id] = v.fallbackOrgScore;
-                    });
-                }
-
-                // Refresh Steps 2 and 3 if visible or rendered
                 renderStep2();
                 renderStep3();
+                renderStep4();
+                renderStep5();
             });
+        }
+
+        function computeAverages() {
+            const selectedTeam = document.getElementById("user-team") ? document.getElementById("user-team").value : "";
+
+            if (globalSubmissions.length > 0) {
+                let orgSums = {};
+                let teamSums = {};
+                let teamCount = 0;
+
+                valuesData.forEach(v => {
+                    orgSums[v.id] = 0;
+                    teamSums[v.id] = 0;
+                });
+
+                globalSubmissions.forEach(sub => {
+                    const isUserTeam = selectedTeam && sub.team === selectedTeam;
+                    if (isUserTeam) teamCount++;
+
+                    if (sub.rankings && Array.isArray(sub.rankings)) {
+                        sub.rankings.forEach(r => {
+                            if (orgSums[r.id] !== undefined) orgSums[r.id] += r.score;
+                            if (isUserTeam && teamSums[r.id] !== undefined) teamSums[r.id] += r.score;
+                        });
+                    }
+                });
+
+                valuesData.forEach(v => {
+                    calculatedOrgAverages[v.id] = orgSums[v.id] / globalSubmissions.length;
+                    calculatedTeamAverages[v.id] = teamCount > 0 ? (teamSums[v.id] / teamCount) : calculatedOrgAverages[v.id];
+                });
+            } else {
+                // Fallback baseline
+                valuesData.forEach((v, idx) => {
+                    calculatedOrgAverages[v.id] = v.fallbackOrgScore;
+                    // Simulated relative team average for immediate presentation
+                    const myRank = userRankings.findIndex(u => u.id === v.id) + 1;
+                    calculatedTeamAverages[v.id] = (myRank + v.fallbackOrgScore) / 2;
+                });
+            }
         }
 
         function renderStep1List() {
@@ -400,18 +439,18 @@
                 return;
             }
 
-            // Save to Firebase
             const submissionData = {
                 team: team,
                 timestamp: firebase.database.ServerValue.TIMESTAMP,
                 rankings: userRankings.map((item, index) => ({
                     id: item.id,
-                    score: index + 1 // Rank 1 = 1 point, Rank 20 = 20 points
+                    score: index + 1
                 }))
             };
 
             db.ref('submissions').push(submissionData);
             
+            computeAverages();
             renderStep2();
             renderStep3();
             renderStep4();
@@ -440,14 +479,10 @@
             if (!container) return;
             container.innerHTML = "";
 
-            // Prepare sorted array based on calculated averages
             let sortedOrgList = valuesData.map(v => {
                 const avgScore = calculatedOrgAverages[v.id] !== undefined ? calculatedOrgAverages[v.id] : v.fallbackOrgScore;
                 return { ...v, avgScore: avgScore };
-            });
-
-            // Sort low avg score to high avg score (1 = most important)
-            sortedOrgList.sort((a, b) => a.avgScore - b.avgScore);
+            }).sort((a, b) => a.avgScore - b.avgScore);
 
             sortedOrgList.forEach((item, index) => {
                 const card = document.createElement("div");
@@ -465,68 +500,109 @@
             });
         }
 
-        // STEP 3: GAP ANALYSIS
+        // STEP 3: GAP ANALYSIS (3 COLUMNS)
         function renderStep3() {
-            const container = document.getElementById("gap-table-container");
-            if (!container) return;
-            container.innerHTML = "";
+            const colPart = document.getElementById("col-participant-list");
+            const colTeam = document.getElementById("col-team-list");
+            const colOrg = document.getElementById("col-org-list");
 
-            // Get CTC NYC rank mapping from overall calculated averages
-            let sortedOrgList = valuesData.map(v => ({
-                id: v.id,
-                avgScore: calculatedOrgAverages[v.id] !== undefined ? calculatedOrgAverages[v.id] : v.fallbackOrgScore
-            })).sort((a, b) => a.avgScore - b.avgScore);
+            if (!colPart || !colTeam || !colOrg) return;
 
-            let orgRankMap = {};
-            sortedOrgList.forEach((item, idx) => {
-                orgRankMap[item.id] = idx + 1;
+            colPart.innerHTML = "";
+            colTeam.innerHTML = "";
+            colOrg.innerHTML = "";
+
+            // User Rank Map (id -> rank)
+            let userRankMap = {};
+            userRankings.forEach((v, idx) => userRankMap[v.id] = idx + 1);
+
+            // 1. Render Column 1: Participant Ranked Order
+            userRankings.forEach((item, idx) => {
+                const myRank = idx + 1;
+                const card = document.createElement("div");
+                card.className = `p-3 rounded-lg border flex items-center justify-between text-xs font-semibold ${item.cat} shadow-sm h-14`;
+                card.innerHTML = `
+                    <div class="flex items-center gap-2">
+                        <span class="font-mono text-slate-700 font-bold">#${myRank}</span>
+                        <span class="text-slate-900 font-bold">${item.name}</span>
+                    </div>
+                `;
+                colPart.appendChild(card);
             });
 
-            let personalGaps = [];
+            // 2. Render Column 2: Team Ranked Order
+            let teamList = valuesData.map(v => ({
+                ...v,
+                teamAvg: calculatedTeamAverages[v.id] !== undefined ? calculatedTeamAverages[v.id] : ((userRankMap[v.id] + v.fallbackOrgScore) / 2)
+            })).sort((a, b) => a.teamAvg - b.teamAvg);
 
-            userRankings.forEach((item, myRankIndex) => {
-                const myRank = myRankIndex + 1;
-                const orgRank = orgRankMap[item.id] || item.fallbackOrgScore;
-                const teamRank = Math.min(20, Math.max(1, Math.round((myRank + orgRank) / 2)));
-                
-                const gap = Math.abs(myRank - orgRank);
-                personalGaps.push({ name: item.name, gap: gap, myRank: myRank, orgRank: orgRank, teamRank: teamRank });
-
+            teamList.forEach((item, idx) => {
+                const teamRankOrder = idx + 1;
+                const myRank = userRankMap[item.id];
+                const gap = Math.abs(myRank - teamRankOrder);
                 const isSignificant = gap >= 10;
 
                 const card = document.createElement("div");
-                card.className = `p-3.5 rounded-lg border flex flex-col md:flex-row md:items-center justify-between text-sm gap-2 ${item.cat} ${isSignificant ? 'border-2 border-purple-600 shadow-md ring-1 ring-purple-400' : 'border-slate-200'}`;
-                
+                card.className = `p-2.5 rounded-lg border flex items-center justify-between text-xs font-semibold ${item.cat} ${isSignificant ? 'border-2 border-purple-600 shadow-md ring-1 ring-purple-400' : 'border-slate-200'} h-14`;
                 card.innerHTML = `
-                    <div class="flex items-center gap-3 font-semibold text-slate-800">
-                        <span class="font-bold text-slate-700 w-6">#${myRank}</span>
-                        <span>${item.name}</span>
+                    <div class="flex items-center gap-2 overflow-hidden">
+                        <span class="font-mono text-slate-700 font-bold">#${teamRankOrder}</span>
+                        <span class="text-slate-900 font-bold truncate">${item.name}</span>
                     </div>
-                    <div class="grid grid-cols-3 gap-2 text-xs text-center md:flex md:items-center md:gap-6">
-                        <div class="bg-white/60 px-2 py-1 rounded border border-black/10">
-                            <span class="block text-[10px] text-slate-500 uppercase font-bold">You</span>
-                            <span class="font-bold text-slate-800">#${myRank}</span>
-                        </div>
-                        <div class="bg-white/60 px-2 py-1 rounded border border-black/10">
-                            <span class="block text-[10px] text-slate-500 uppercase font-bold">Team Avg</span>
-                            <span class="font-bold text-slate-800">#${teamRank}</span>
-                        </div>
-                        <div class="bg-white/60 px-2 py-1 rounded border border-black/10">
-                            <span class="block text-[10px] text-slate-500 uppercase font-bold">CTC NYC</span>
-                            <span class="font-bold text-slate-800">#${orgRank}</span>
-                        </div>
-                        <div class="col-span-3 md:col-span-1 flex justify-end items-center">
-                            <span class="${isSignificant ? 'bg-purple-700 text-white font-bold px-2.5 py-1 rounded-full text-xs shadow-sm' : 'text-slate-600 font-mono text-xs'}">
-                                Gap: ${gap}
-                            </span>
-                        </div>
+                    <div class="text-right flex-shrink-0">
+                        <div class="text-[10px] text-slate-600">Avg: <span class="font-bold">${item.teamAvg.toFixed(1)}</span></div>
+                        <span class="${isSignificant ? 'bg-purple-700 text-white font-bold px-1.5 py-0.5 rounded text-[10px]' : 'text-slate-600 text-[10px]'}">
+                            Gap: ${gap}
+                        </span>
                     </div>
                 `;
-                container.appendChild(card);
+                colTeam.appendChild(card);
             });
 
-            // Populate Callouts
-            personalGaps.sort((a, b) => b.gap - a.gap);
+            // 3. Render Column 3: CTC NYC Ranked Order
+            let orgList = valuesData.map(v => ({
+                ...v,
+                orgAvg: calculatedOrgAverages[v.id] !== undefined ? calculatedOrgAverages[v.id] : v.fallbackOrgScore
+            })).sort((a, b) => a.orgAvg - b.orgAvg);
+
+            orgList.forEach((item, idx) => {
+                const orgRankOrder = idx + 1;
+                const myRank = userRankMap[item.id];
+                const gap = Math.abs(myRank - orgRankOrder);
+                const isSignificant = gap >= 10;
+
+                const card = document.createElement("div");
+                card.className = `p-2.5 rounded-lg border flex items-center justify-between text-xs font-semibold ${item.cat} ${isSignificant ? 'border-2 border-purple-600 shadow-md ring-1 ring-purple-400' : 'border-slate-200'} h-14`;
+                card.innerHTML = `
+                    <div class="flex items-center gap-2 overflow-hidden">
+                        <span class="font-mono text-slate-700 font-bold">#${orgRankOrder}</span>
+                        <span class="text-slate-900 font-bold truncate">${item.name}</span>
+                    </div>
+                    <div class="text-right flex-shrink-0">
+                        <div class="text-[10px] text-slate-600">Avg: <span class="font-bold">${item.orgAvg.toFixed(1)}</span></div>
+                        <span class="${isSignificant ? 'bg-purple-700 text-white font-bold px-1.5 py-0.5 rounded text-[10px]' : 'text-slate-600 text-[10px]'}">
+                            Gap: ${gap}
+                        </span>
+                    </div>
+                `;
+                colOrg.appendChild(card);
+            });
+
+            // Populate Callouts in Top Section
+            let personalGaps = userRankings.map((item, myRankIdx) => {
+                const myRank = myRankIdx + 1;
+                const orgRankIdx = orgList.findIndex(o => o.id === item.id) + 1;
+                const teamRankIdx = teamList.findIndex(t => t.id === item.id) + 1;
+                return {
+                    name: item.name,
+                    gap: Math.abs(myRank - orgRankIdx),
+                    myRank: myRank,
+                    orgRank: orgRankIdx,
+                    teamRank: teamRankIdx,
+                    teamOrgGap: Math.abs(teamRankIdx - orgRankIdx)
+                };
+            }).sort((a, b) => b.gap - a.gap);
+
             const personalList = document.getElementById("personal-gaps-list");
             if (personalList) {
                 personalList.innerHTML = personalGaps.slice(0, 3).map(g => 
@@ -534,59 +610,70 @@
                 ).join("");
             }
 
-            const teamList = document.getElementById("team-gaps-list");
-            if (teamList) {
-                teamList.innerHTML = personalGaps.slice(1, 4).map(g => 
-                    `<li>• <strong>${g.name}</strong> (Team Avg: #${g.teamRank} vs Org: #${g.orgRank} → Gap of ${Math.abs(g.teamRank - g.orgRank)})</li>`
+            const teamListEl = document.getElementById("team-gaps-list");
+            if (teamListEl) {
+                teamListEl.innerHTML = personalGaps.slice(1, 4).map(g => 
+                    `<li>• <strong>${g.name}</strong> (Team Rank: #${g.teamRank} vs Org: #${g.orgRank} → Gap of ${g.teamOrgGap})</li>`
                 ).join("");
             }
         }
 
-        // STEP 4: OVERUSE
+        // STEP 4: OVERUSE (DRIVEN BY CTC NYC TOP 3 VALUES)
         function renderStep4() {
             const container = document.getElementById("overuse-cards-container");
             if (!container) return;
             container.innerHTML = "";
 
-            const top3 = userRankings.slice(0, 3);
+            // Get Top 3 CTC NYC values
+            let orgTop3 = valuesData.map(v => ({
+                ...v,
+                orgAvg: calculatedOrgAverages[v.id] !== undefined ? calculatedOrgAverages[v.id] : v.fallbackOrgScore
+            })).sort((a, b) => a.orgAvg - b.orgAvg).slice(0, 3);
 
-            top3.forEach((item, index) => {
+            orgTop3.forEach((item, index) => {
                 const card = document.createElement("div");
                 card.className = `p-4 rounded-xl border ${item.cat} shadow-sm space-y-2`;
                 card.innerHTML = `
                     <div class="flex items-center justify-between border-b border-current/20 pb-2">
-                        <span class="font-extrabold text-base">#${index + 1} Core Value: ${item.name}</span>
-                        <span class="text-xs uppercase font-bold px-2 py-0.5 rounded bg-black/10">Top Strength</span>
+                        <span class="font-extrabold text-base">CTC NYC #${index + 1} Value: ${item.name}</span>
+                        <span class="text-xs uppercase font-bold px-2 py-0.5 rounded bg-black/10">Organizational Core Strength</span>
                     </div>
                     <p class="text-xs leading-relaxed opacity-95">
-                        <strong class="font-bold">Danger of Overuse:</strong> ${item.overuse}
+                        <strong class="font-bold">${item.overuse}</strong>
                     </p>
                 `;
                 container.appendChild(card);
             });
         }
 
-        // STEP 5: BLUEPRINT
+        // STEP 5: BLUEPRINT (DRIVEN BY CTC NYC TOP 3 VALUES)
         function renderStep5() {
             const container = document.getElementById("blueprint-cards-container");
             if (!container) return;
             container.innerHTML = "";
 
-            const top3 = userRankings.slice(0, 3);
+            // Get Top 3 CTC NYC values
+            let orgTop3 = valuesData.map(v => ({
+                ...v,
+                orgAvg: calculatedOrgAverages[v.id] !== undefined ? calculatedOrgAverages[v.id] : v.fallbackOrgScore
+            })).sort((a, b) => a.orgAvg - b.orgAvg).slice(0, 3);
 
-            top3.forEach((item, index) => {
+            orgTop3.forEach((item, index) => {
                 const balanceVal = valuesData.find(v => v.name === item.balance) || { name: item.balance, cat: "cat-strategic" };
 
                 const card = document.createElement("div");
                 card.className = "bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-3";
                 card.innerHTML = `
                     <div class="flex items-center justify-between border-b pb-2">
-                        <span class="font-bold text-slate-800 text-sm">Strength #${index + 1}: ${item.name}</span>
+                        <span class="font-bold text-slate-800 text-sm">CTC NYC Strength #${index + 1}: ${item.name}</span>
                         <span class="text-xs text-amber-800 font-semibold bg-amber-50 px-2 py-0.5 rounded border border-amber-200">Recommended Counter-Balance</span>
+                    </div>
+                    <div class="text-xs text-slate-600 bg-slate-50 p-2.5 rounded border border-slate-200">
+                        <strong>Overuse Risk:</strong> ${item.overuse}
                     </div>
                     <div class="grid md:grid-cols-2 gap-3 text-xs">
                         <div class="p-3 rounded-lg ${item.cat}">
-                            <div class="font-bold mb-1">Primary Strength</div>
+                            <div class="font-bold mb-1">Primary Organizational Strength</div>
                             <div>${item.name}</div>
                         </div>
                         <div class="p-3 rounded-lg ${balanceVal.cat || 'bg-slate-100 text-slate-800'}">
@@ -607,9 +694,15 @@
         }
 
         function copySummaryStep5() {
-            const summary = userRankings.slice(0, 3).map((item, i) => 
-                `${i + 1}. Strength: ${item.name} | Balancing Value: ${item.balance}`
+            let orgTop3 = valuesData.map(v => ({
+                ...v,
+                orgAvg: calculatedOrgAverages[v.id] !== undefined ? calculatedOrgAverages[v.id] : v.fallbackOrgScore
+            })).sort((a, b) => a.orgAvg - b.orgAvg).slice(0, 3);
+
+            const summary = orgTop3.map((item, i) => 
+                `${i + 1}. CTC NYC Strength: ${item.name} | Balancing Value: ${item.balance}`
             ).join("\n");
+            
             navigator.clipboard.writeText(`CTC NYC Counter-Balancing Blueprint:\n${summary}`);
             alert("Blueprint summary copied to clipboard!");
         }
